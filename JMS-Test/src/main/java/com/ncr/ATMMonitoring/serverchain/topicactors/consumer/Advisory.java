@@ -62,7 +62,6 @@ public class Advisory extends TopicActor{
 	
 	Destination consumerTopic = AdvisorySupport.getConnectionAdvisoryTopic();
 	
-	System.out.println("Subscribing to advisory " + consumerTopic);
 	MessageConsumer consumerAdvisory = session
 		.createConsumer(consumerTopic);
 	consumerAdvisory.setMessageListener(listener);
@@ -84,10 +83,10 @@ public class Advisory extends TopicActor{
 		case CommandTypes.CONNECTION_INFO:
 		   
 		    ConnectionInfo connectionInfo = (ConnectionInfo) ds;
-		   
-		    System.out.println("Consumer "
-			    + connectionInfo.getClientId());
-			    
+		   if(connectionInfo.getClientId().startsWith("subscriber")){
+		       System.out.println("Consumer "
+				    + connectionInfo.getClientId());
+		   }    
 		    
 		    break;
 		    
@@ -99,5 +98,8 @@ public class Advisory extends TopicActor{
 	    }
 	}
     }
+       
+
+  
 
 }
