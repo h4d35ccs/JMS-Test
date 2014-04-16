@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.topicactors.TopicActor;
+import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
 
 @Component("outgoingProducer")
 public class OutgoingMessageProducer  extends TopicActor  {
@@ -53,6 +53,12 @@ public class OutgoingMessageProducer  extends TopicActor  {
 	}
 
     }
+    
+    private ObjectMessage createMessageFromSession(Session session,
+	    Serializable msg) throws JMSException {
+
+	return session.createObjectMessage(msg);
+    }
 
     private void setupLocalConectionToBroker() throws JMSException {
 
@@ -78,11 +84,7 @@ public class OutgoingMessageProducer  extends TopicActor  {
 	return session.createProducer(topic);
     }
 
-    private ObjectMessage createMessageFromSession(Session session,
-	    Serializable msg) throws JMSException {
-
-	return session.createObjectMessage(msg);
-    }
+    
 
     private void sendMessage(MessageProducer producer, ObjectMessage message)
 	    throws JMSException {

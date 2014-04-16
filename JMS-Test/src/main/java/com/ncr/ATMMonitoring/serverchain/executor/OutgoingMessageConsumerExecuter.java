@@ -1,5 +1,6 @@
-package com.ncr.ATMMonitoring.serverchain.topicactors.consumer;
+package com.ncr.ATMMonitoring.serverchain.executor;
 
+import javax.annotation.Resource;
 import javax.jms.JMSException;
 
 import org.apache.log4j.Logger;
@@ -7,11 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
+import com.ncr.ATMMonitoring.serverchain.topicactors.consumer.TopicConsumer;
+
 @Component("ConsumerExecuter")
 public class OutgoingMessageConsumerExecuter {
 
+    @Resource(name="outgoingMessageConsumer")
+    private TopicConsumer consumer;
+    
     @Autowired
-    private OutgoingMessageConsumer consumer;
+    private ChainLinkInformation chainLinkPosition;
 
     private static final Logger logger = Logger
 	    .getLogger(OutgoingMessageConsumerExecuter.class);
@@ -20,13 +27,13 @@ public class OutgoingMessageConsumerExecuter {
     public void runConsumer() {
 	logger.debug("cheching");
 
-	boolean hasParentAndShouldLaunchConsumer = this.consumer
+	boolean hasParentAndShouldLaunchConsumer = this.chainLinkPosition
 		.hasParentNode();
 
 	if (hasParentAndShouldLaunchConsumer) {
 	    try {
-		this.consumer.subscribeSetup();
-		this.consumer.getOutgoingMessageFromTopic();
+		this.consumer.setup();
+		this.consumer.consumeMessage();
 	    } catch (JMSException e) {
 		logger.error(e.getMessage(),e);
 	    }

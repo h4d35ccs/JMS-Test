@@ -1,16 +1,15 @@
-package com.ncr.ATMMonitoring.serverchain.topicactors.consumer;
+package com.ncr.ATMMonitoring.serverchain.message.listener;
 
+import javax.annotation.Resource;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.message.MessageProcessor;
-import com.ncr.ATMMonitoring.serverchain.message.OutgoingMessage;
+import com.ncr.ATMMonitoring.serverchain.message.processor.MessageProcessor;
 
 @Component
 public class OutgoingMessageListener implements MessageListener {
@@ -18,7 +17,7 @@ public class OutgoingMessageListener implements MessageListener {
     private static final Logger logger = Logger
 	    .getLogger(OutgoingMessageListener.class);
 
-    @Autowired
+    @Resource(name="outgoingMessageProcessor")
     private MessageProcessor messageProcessor;
 
     @Override
@@ -43,11 +42,9 @@ public class OutgoingMessageListener implements MessageListener {
     private void processReceivedMessage(ObjectMessage objectOutgoingMessage)
 	    throws JMSException {
 
-	OutgoingMessage sentMessage = (OutgoingMessage) objectOutgoingMessage
-		.getObject();
+	
+	logger.debug("Received Message in consumer" + objectOutgoingMessage);
 
-	logger.debug("Received Message in consumer" + sentMessage);
-
-	this.messageProcessor.processReceivedMessage(sentMessage);
+	this.messageProcessor.processReceivedMessage(objectOutgoingMessage);
     }
 }
