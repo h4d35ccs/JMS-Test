@@ -3,20 +3,10 @@
  */
 package com.ncr.ATMMonitoring.serverchain;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
@@ -37,8 +27,6 @@ public class ChildrenLinkListHandler {
 
     private Set<String> childrenSubscribed = new HashSet<String>();
 
-    private static final String SUBSCRIPTION_LIST_FILENAME = "subscription_list.bin";
-
     public boolean isChildSubscribed(String childIpandPort) {
 
 	boolean childSubscribed = false;
@@ -55,9 +43,6 @@ public class ChildrenLinkListHandler {
 	this.childrenSubscribed.add(childIpandPort);
 	
     }
-
-    
-   
 
     public void removeChildIpToSubscribedList(String childIpandPort) {
 	this.childrenSubscribed.remove(childIpandPort);
