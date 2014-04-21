@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
 import com.ncr.ATMMonitoring.serverchain.message.OutgoingMessage;
-import com.ncr.ATMMonitoring.serverchain.topicactors.producer.OutgoingMessageProducer;
+import com.ncr.ATMMonitoring.serverchain.topicactor.producer.OutgoingMessageProducer;
 
 @Component
 public class ProducerTestExecuter {

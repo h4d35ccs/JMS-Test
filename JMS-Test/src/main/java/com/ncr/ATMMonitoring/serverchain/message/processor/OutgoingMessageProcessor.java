@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.message.OutgoingMessage;
-import com.ncr.ATMMonitoring.serverchain.topicactors.producer.OutgoingMessageProducer;
+import com.ncr.ATMMonitoring.serverchain.topicactor.producer.OutgoingMessageProducer;
 
 /**
  * @author Otto Abreu

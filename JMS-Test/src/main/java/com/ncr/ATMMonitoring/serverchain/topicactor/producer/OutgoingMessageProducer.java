@@ -1,4 +1,4 @@
-package com.ncr.ATMMonitoring.serverchain.topicactors.producer;
+package com.ncr.ATMMonitoring.serverchain.topicactor.producer;
 
 import java.io.Serializable;
 

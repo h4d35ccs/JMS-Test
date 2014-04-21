@@ -1,4 +1,4 @@
-package com.ncr.ATMMonitoring.serverchain.topicactors.consumer.outgoing;
+package com.ncr.ATMMonitoring.serverchain.topicactor.consumer.outgoing;
 
 import javax.jms.MessageListener;
 
@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.message.listener.OutgoingMessageListener;
-import com.ncr.ATMMonitoring.serverchain.topicactors.consumer.TopicConsumer;
+import com.ncr.ATMMonitoring.serverchain.topicactor.consumer.TopicConsumer;
 
 @Component("outgoingMessageConsumer")
 public  class OutgoingMessageConsumer extends TopicConsumer {

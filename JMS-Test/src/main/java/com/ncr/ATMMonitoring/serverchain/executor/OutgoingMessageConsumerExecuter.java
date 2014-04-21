@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
-import com.ncr.ATMMonitoring.serverchain.topicactors.consumer.TopicConsumer;
+import com.ncr.ATMMonitoring.serverchain.topicactor.consumer.TopicConsumer;
 
 @Component("ConsumerExecuter")
 public class OutgoingMessageConsumerExecuter {

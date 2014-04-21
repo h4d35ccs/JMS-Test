@@ -1,4 +1,4 @@
-package com.ncr.ATMMonitoring.serverchain.topicactors.consumer;
+package com.ncr.ATMMonitoring.serverchain.topicactor.consumer;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
