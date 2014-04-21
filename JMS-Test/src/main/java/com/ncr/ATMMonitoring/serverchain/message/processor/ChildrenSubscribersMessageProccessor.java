@@ -37,16 +37,20 @@ public class ChildrenSubscribersMessageProccessor implements MessageProcessor {
 
 		this.processMessage(ds);
 	    }
+	}else{
+	    throw new IllegalArgumentException("the message class should be ActiveMQMessage, received: "
+				+ message.getClass());
+	    
 	}
 
     }
 
     private void processMessage(DataStructure ds) {
 
-	String childId = getChildId(ds);
-
+	String childId = this.getChildId(ds);
+	
 	if (ChildrenLinkListHandler.isChildSubscription(childId)) {
-
+	   
 	    String childUrlAndPort = this.getChildUrlAndPort(childId);
 	    this.addChildUrlAndPortToList(childUrlAndPort);
 	}

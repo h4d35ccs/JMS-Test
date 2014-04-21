@@ -1,4 +1,4 @@
-package com.ncr.ATMMonitoring.serverchain.executor;
+package com.ncr.ATMMonitoring.serverchain.executer;
 
 import javax.annotation.Resource;
 import javax.jms.JMSException;

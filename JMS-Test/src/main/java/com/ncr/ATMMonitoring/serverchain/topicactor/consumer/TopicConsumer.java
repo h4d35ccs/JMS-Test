@@ -134,6 +134,10 @@ public abstract class TopicConsumer extends TopicActor {
     protected Session getSession() {
         return session;
     }
+    
+    protected void setSession(Session session) {
+        this.session = session;
+    }
 
     protected boolean isConnected() {
         return connected;

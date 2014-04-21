@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
 
 @Component
-public class TopicActor {
+public abstract class TopicActor {
 
     @Autowired
     private ChainLinkInformation chainLinkInformation;
@@ -32,12 +32,28 @@ public class TopicActor {
     protected static final int USE_LOCAL_BROKER_URL = 0;
 
     protected static final int USE_PARENT_OUTGOING_BROKER_URL = 1;
+    
+    protected static final int USE_CHILD_INCOMING_BROKER_URL = 2;
 
     protected ConnectionFactory getConnectionFactory(String clientId,
 	    int brokerType) {
 
 	String brokerUrl = this.getBrokerURL(brokerType);
 
+	ConnectionFactory connectionFactory =  this.createConnectionFactory(clientId, brokerUrl);
+	
+	return connectionFactory;
+    }
+    
+    protected ConnectionFactory getConnectionFactory(String clientId,
+	    String brokerUrl) {
+	
+	ConnectionFactory connectionFactory =  this.createConnectionFactory(clientId, brokerUrl);
+	return connectionFactory;
+    }
+    
+    private ConnectionFactory createConnectionFactory(String clientId,
+	    String brokerUrl){
 	ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
 		brokerUrl);
 	connectionFactory.setClientID(clientId);
@@ -56,6 +72,7 @@ public class TopicActor {
 	case USE_PARENT_OUTGOING_BROKER_URL:
 	    url = this.chainLinkInformation.getParentOutgoingTopicUrl();
 	    break;
+	    
 	default:
 	    throw new IllegalArgumentException(
 		    "Unknown broker type, use TopicActor constants for defining the broker type, Received: "
@@ -63,6 +80,8 @@ public class TopicActor {
 	}
 	return url;
     }
+    
+
 
     protected Connection getAndStartJMSConnection(ConnectionFactory factory)
 	    throws JMSException {

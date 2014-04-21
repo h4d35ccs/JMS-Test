@@ -17,6 +17,8 @@ public interface ChainLinkInformation {
     
     boolean isMiddleNode();
     
+    boolean isOnlyNode();
+    
     String getLocalBrokerUrl();
     
     String getOutgoingTopicName();
@@ -24,5 +26,7 @@ public interface ChainLinkInformation {
     String getIncomingTopicName();
     
     String getParentOutgoingTopicUrl();
+    
+    String generateRemoteBrokerUrl(String ip);
 
 }

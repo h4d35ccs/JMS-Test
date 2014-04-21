@@ -8,40 +8,32 @@ import javax.jms.Session;
 import javax.jms.Topic;
 
 import org.apache.activemq.advisory.AdvisorySupport;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.message.listener.ChildrenSubscribersListener;
 
-@Component
-public class Advisory extends TopicConsumer {
+@Component("subscribersTopicConsumer")
+public class SubscribersTopicConsumer extends TopicConsumer {
 
- 
-    @Scheduled(cron = "1 * * * * *")
-    public void checkConsumers() throws Exception {
-
-	this.setup();
-	System.out.println("consuming advisory msg");
-	this.consumeMessage();
-    }
     @Override
     public void setup() throws JMSException {
 	if (!this.isConnected()) {
-
+	   
 	    this.setupConnectionFactoryAndSession();
-	    Destination consumerTopic = AdvisorySupport.getConnectionAdvisoryTopic();
-	    MessageConsumer messageConsumer = this.createMessageConsumer(this.getSession(),(Topic)consumerTopic);
+	    Destination consumerTopic = AdvisorySupport
+		    .getConnectionAdvisoryTopic();
+	    MessageConsumer messageConsumer = this.createMessageConsumer(
+		    this.getSession(), (Topic) consumerTopic);
 	    this.setMessageConsumer(messageConsumer);
 	    this.setConnected(true);
 	}
     }
-    
+
     @Override
     protected MessageConsumer createMessageConsumer(Session session, Topic topic)
 	    throws JMSException {
 
-	MessageConsumer consumerAdvisory = session
-		.createConsumer(topic);
+	MessageConsumer consumerAdvisory = session.createConsumer(topic);
 	return consumerAdvisory;
     }
 
@@ -59,12 +51,12 @@ public class Advisory extends TopicConsumer {
 
     @Override
     protected MessageListener getSpecificListener() {
+	
 	ChildrenSubscribersListener stl = (ChildrenSubscribersListener) this
 		.getMessageListenerFromSpringContext(this.springContext,
 			ChildrenSubscribersListener.class);
 	return stl;
     }
-
 
     @Override
     protected String getTopicName() {
