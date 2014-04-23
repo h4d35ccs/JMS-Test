@@ -8,11 +8,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
-import com.ncr.ATMMonitoring.serverchain.message.OutgoingMessage;
-import com.ncr.ATMMonitoring.serverchain.topicactor.producer.OutgoingMessageProducer;
+import com.ncr.ATMMonitoring.serverchain.message.IncomingMessage;
+import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
 
 @Component
-public class ProducerTestExecuter {
+public class ProducerIncomingTestExecuter {
     
     @Value("${jms.localbroker.url}")
     private String localUrl;
@@ -21,7 +21,7 @@ public class ProducerTestExecuter {
     private ChainLinkInformation chainLinkPosition;
 
     @Autowired
-    private OutgoingMessageProducer outgoingProducer;
+    private GenericMessageProducer incomingMessageProducer;
 
 //    private static final Logger logger = Logger
 //	    .getLogger(ProducerTestExecuter.class);
@@ -33,13 +33,13 @@ public class ProducerTestExecuter {
 
 	
 
-	if (!chainLinkPosition.hasParentNode()) {
+	if (chainLinkPosition.hasParentNode()) {
 
-	    OutgoingMessage outMessage = new OutgoingMessage(
-		    "message to send from: " + localUrl, this.count++,
+	    IncomingMessage incomingMessage = new IncomingMessage(
+		    "Incoming message to send from: " + localUrl, this.count++,
 		    new Date());
 
-	    this.outgoingProducer.sendMessage(outMessage);
+	    this.incomingMessageProducer.sendMessage(incomingMessage);
 	}
     }
 }

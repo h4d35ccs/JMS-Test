@@ -11,14 +11,14 @@ import com.ncr.ATMMonitoring.serverchain.message.processor.MessageProcessor;
 
 /**
  * @author Otto Abreu
- *
+ * 
  */
 @Component
-public class IncomingMessageListener extends GenericListener{
+public class IncomingMessageListener extends GenericListener {
 
-    @Resource(name="incomingMessageProcessor")
+    @Resource(name = "incomingMessageProcessor")
     private MessageProcessor messageProcessor;
-    
+
     @Override
     protected MessageProcessor getMessageProcessor() {
 	// TODO Auto-generated method stub

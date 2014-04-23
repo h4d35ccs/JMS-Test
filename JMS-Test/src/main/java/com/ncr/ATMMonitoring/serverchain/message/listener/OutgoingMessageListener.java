@@ -1,10 +1,6 @@
 package com.ncr.ATMMonitoring.serverchain.message.listener;
 
 import javax.annotation.Resource;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;

@@ -32,7 +32,7 @@ public abstract class TopicActor {
     protected static final int USE_LOCAL_BROKER_URL = 0;
 
     protected static final int USE_PARENT_OUTGOING_BROKER_URL = 1;
-    
+
     protected static final int USE_CHILD_INCOMING_BROKER_URL = 2;
 
     protected ConnectionFactory getConnectionFactory(String clientId,
@@ -40,20 +40,22 @@ public abstract class TopicActor {
 
 	String brokerUrl = this.getBrokerURL(brokerType);
 
-	ConnectionFactory connectionFactory =  this.createConnectionFactory(clientId, brokerUrl);
-	
+	ConnectionFactory connectionFactory = this.createConnectionFactory(
+		clientId, brokerUrl);
+
 	return connectionFactory;
     }
-    
+
     protected ConnectionFactory getConnectionFactory(String clientId,
 	    String brokerUrl) {
-	
-	ConnectionFactory connectionFactory =  this.createConnectionFactory(clientId, brokerUrl);
+
+	ConnectionFactory connectionFactory = this.createConnectionFactory(
+		clientId, brokerUrl);
 	return connectionFactory;
     }
-    
+
     private ConnectionFactory createConnectionFactory(String clientId,
-	    String brokerUrl){
+	    String brokerUrl) {
 	ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
 		brokerUrl);
 	connectionFactory.setClientID(clientId);
@@ -72,7 +74,7 @@ public abstract class TopicActor {
 	case USE_PARENT_OUTGOING_BROKER_URL:
 	    url = this.chainLinkInformation.getParentOutgoingTopicUrl();
 	    break;
-	    
+
 	default:
 	    throw new IllegalArgumentException(
 		    "Unknown broker type, use TopicActor constants for defining the broker type, Received: "
@@ -80,8 +82,6 @@ public abstract class TopicActor {
 	}
 	return url;
     }
-    
-
 
     protected Connection getAndStartJMSConnection(ConnectionFactory factory)
 	    throws JMSException {
@@ -109,8 +109,8 @@ public abstract class TopicActor {
 
     protected String getClientId(String clientBaseId) {
 
-	return clientBaseId + OPEN_ENCLOSING_BLOCK
-		+ this.getNodeLocalAddress() + CLOSE_ENCLOSING_BLOCK;
+	return clientBaseId + OPEN_ENCLOSING_BLOCK + this.getNodeLocalAddress()
+		+ CLOSE_ENCLOSING_BLOCK;
     }
 
     protected String getNodeLocalAddress() {

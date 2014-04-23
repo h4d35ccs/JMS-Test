@@ -9,6 +9,7 @@ import javax.jms.JMSException;
 import javax.jms.MessageListener;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.message.listener.IncomingMessageListener;
@@ -19,6 +20,7 @@ import com.ncr.ATMMonitoring.serverchain.topicactor.consumer.TopicConsumer;
  * 
  */
 @Component("incomingMessageConsumer")
+@Scope("prototype")
 public class IncomingMessageConsumer extends TopicConsumer {
 
     private static final Logger logger = Logger
@@ -32,7 +34,7 @@ public class IncomingMessageConsumer extends TopicConsumer {
 
 	ConnectionFactory connectionFactory = this.getConnectionFactory(
 		this.getSubscriberId(), this.remoteChildBrokerUrl);
-	logger.debug("creating incoming consumer connection");
+	logger.debug("creating incoming consumer connection to "+this.remoteChildBrokerUrl);
 
 	Connection connection = this
 		.getAndStartJMSConnection(connectionFactory);

@@ -117,7 +117,7 @@ public abstract class TopicConsumer extends TopicActor {
     }
     
     @PreDestroy
-    protected void disconect() throws JMSException {
+    public void disconect() throws JMSException {
 	this.session.close();
 	this.connected = false;
     }

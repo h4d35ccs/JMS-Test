@@ -3,21 +3,25 @@
  */
 package com.ncr.ATMMonitoring.serverchain.message.processor;
 
-import javax.jms.Message;
-
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+
+import com.ncr.ATMMonitoring.serverchain.message.MessageWrapper;
 
 /**
  * @author Otto Abreu
- *
+ * 
  */
 @Component("incomingMessageProcessor")
-public class IncomingMessageProcessor implements MessageProcessor{
+public class IncomingMessageProcessor extends ObjectMessageProcessor {
+
+    private static final Logger logger = Logger
+	    .getLogger(IncomingMessageProcessor.class);
 
     @Override
-    public void processReceivedMessage(Message message) {
-	
-	
+    protected void processMessage(MessageWrapper message) {
+	logger.debug("received message in Incoming processor:" + message);
+
     }
 
 }

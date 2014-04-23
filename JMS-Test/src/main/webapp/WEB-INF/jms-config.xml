@@ -5,28 +5,35 @@
               http://www.springframework.org/schema/beans/spring-beans.xsd
               http://www.springframework.org/schema/jms
               http://www.springframework.org/schema/jms/spring-jms.xsd">
-  
-  <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-	  <property name="location">
-	    <value>classpath:jmsconfig.properties</value>
-	  </property>
-	  <property name="ignoreUnresolvablePlaceholders" value="true"/>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:jmsconfig.properties</value>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
-	
- <bean id="brokerJMS" class="org.apache.activemq.broker.BrokerService"
+
+	<bean id="brokerJMS" class="org.apache.activemq.broker.BrokerService"
 		init-method="start" destroy-method="stop">
 		<property name="brokerName" value="broker" />
 		<property name="persistent" value="false" />
-		<property name="useJmx" value="false"/>
+		<property name="useJmx" value="false" />
 		<property name="transportConnectorURIs">
 			<list>
 				<value>${jms.localbroker.url}</value>
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="localConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-    <property name="brokerURL" value="${jms.localbroker.url}"/>
-</bean>
-	
+		<property name="brokerURL" value="${jms.localbroker.url}" />
+	</bean>
+
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="maxConnections" value="10" />
+		<property name="maximumActive" value="100" />
+		<property name="connectionFactory" ref="localConnectionFactory" />
+	</bean>
+
 </beans>
