@@ -40,7 +40,7 @@ public class OutgoingMessageProcessor implements MessageProcessor {
 
     private void processOutgoingMessage(Serializable message) {
 
-	
+	logger.debug("received message in outgoing processor:" + message);
 	if(chainLinkInformation.isMiddleNode()){
 	    logger.debug("passing message:" + message);
 	    this.outgoingProducer.sendMessage(message);
