@@ -30,7 +30,10 @@ public class OutgoingMessageProcessor extends ObjectMessageProcessor {
     protected void processMessage(MessageWrapper message) {
 
 	logger.debug("received message in outgoing processor:" + message);
+<<<<<<< HEAD
 	
+=======
+>>>>>>> fcacd3d5a4e3872b6e7e41e2a3cb8784fa6d785c
 	if(chainLinkInformation.isMiddleNode()){
 	    
 	    logger.debug("passing message:" + message);
