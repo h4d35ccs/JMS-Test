@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
-import com.ncr.ATMMonitoring.serverchain.message.IncomingMessage;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
 import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
 
 @Component
@@ -36,8 +36,7 @@ public class ProducerIncomingTestExecuter {
 	if (chainLinkPosition.hasParentNode()) {
 
 	    IncomingMessage incomingMessage = new IncomingMessage(
-		    "Incoming message to send from: " + localUrl, this.count++,
-		    new Date());
+		    "Incoming message to send from: " + localUrl, this.count++);
 
 	    this.incomingMessageProducer.sendMessage(incomingMessage);
 	}

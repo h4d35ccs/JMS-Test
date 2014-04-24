@@ -1,6 +1,7 @@
 package com.ncr.ATMMonitoring.serverchain.topicactor.producer;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
@@ -12,6 +13,7 @@ import javax.jms.Topic;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.log4j.Logger;
 
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
 
 
@@ -35,12 +37,15 @@ public abstract class GenericMessageProducer  extends TopicActor  {
 
 	    ObjectMessage messageToSend = this.createMessageFromSession(
 		    session, message);
-
+	    
+	    this.setMessageStamp(message);
+	    
 	    this.sendMessage(producer, messageToSend);
 
 	    this.closeConnection(connection);
 
 	    logger.debug("message sent: " + message);
+	
 	} catch (JMSException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -90,6 +95,14 @@ public abstract class GenericMessageProducer  extends TopicActor  {
 	    throws JMSException {
 
 	producer.send(message);
+    }
+    
+    private void setMessageStamp(Serializable message){
+	
+	if(message instanceof MessageWrapper){
+	    MessageWrapper msgWrapper = (MessageWrapper)message;
+	    msgWrapper.stampMessage(this.getNodeLocalAddress(), new Date());
+	}
     }
 
 }

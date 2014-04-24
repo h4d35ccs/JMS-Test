@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
-import com.ncr.ATMMonitoring.serverchain.message.MessageWrapper;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 import com.ncr.ATMMonitoring.serverchain.topicactor.producer.OutgoingMessageProducer;
 
 /**
@@ -30,10 +30,7 @@ public class OutgoingMessageProcessor extends ObjectMessageProcessor {
     protected void processMessage(MessageWrapper message) {
 
 	logger.debug("received message in outgoing processor:" + message);
-<<<<<<< HEAD
-	
-=======
->>>>>>> fcacd3d5a4e3872b6e7e41e2a3cb8784fa6d785c
+
 	if(chainLinkInformation.isMiddleNode()){
 	    
 	    logger.debug("passing message:" + message);

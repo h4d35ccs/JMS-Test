@@ -9,7 +9,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 
-import com.ncr.ATMMonitoring.serverchain.message.MessageWrapper;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * @author Otto Abreu

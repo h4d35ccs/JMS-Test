@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.ncr.ATMMonitoring.serverchain.message;
+package com.ncr.ATMMonitoring.serverchain.message.wrapper;
 
-import java.util.Date;
 
 /**
  * @author Otto Abreu
@@ -11,8 +10,8 @@ import java.util.Date;
  */
 public class IncomingMessage extends MessageWrapper{
 
-    public IncomingMessage(String message, int id, Date generatedDate) {
-	super(message, id, generatedDate);
+    public IncomingMessage(String message, int id) {
+	super(message, id);
 	
     }
 

@@ -1,14 +1,12 @@
 package com.ncr.ATMMonitoring.serverchain.executer;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
-import com.ncr.ATMMonitoring.serverchain.message.OutgoingMessage;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
 import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
 
 @Component
@@ -34,8 +32,7 @@ public class ProducerOutgoingTestExecuter {
 	if (!chainLinkPosition.hasParentNode()) {
 
 	    OutgoingMessage outMessage = new OutgoingMessage(
-		    "Outgoing message to send from: " + localUrl, this.count++,
-		    new Date());
+		    "Outgoing message to send from: " + localUrl, this.count++);
 
 	    this.outgoingProducer.sendMessage(outMessage);
 	}

@@ -6,7 +6,7 @@ package com.ncr.ATMMonitoring.serverchain.message.processor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.message.MessageWrapper;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * @author Otto Abreu
