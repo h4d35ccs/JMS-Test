@@ -40,6 +40,5 @@ public  class OutgoingMessageConsumer extends TopicConsumer {
 	return this.getOutgoingTopicName();
     }
 
-  
 
 }

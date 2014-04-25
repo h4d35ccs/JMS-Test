@@ -1,7 +1,6 @@
 package com.ncr.ATMMonitoring.serverchain.topicactor.producer;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
@@ -13,11 +12,11 @@ import javax.jms.Topic;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.log4j.Logger;
 
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
+import com.ncr.ATMMonitoring.serverchain.message.Stamper;
 import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
 
 
-public abstract class GenericMessageProducer  extends TopicActor  {
+public abstract class GenericMessageProducer  extends TopicActor implements Stamper  {
 
 
     private static final Logger logger = Logger
@@ -32,14 +31,14 @@ public abstract class GenericMessageProducer  extends TopicActor  {
     public void sendMessage(Serializable message) {
 
 	try {
+	    
+	    this.setMessageStamp(message);
 
 	    this.setupLocalConectionToBroker();
 
 	    ObjectMessage messageToSend = this.createMessageFromSession(
 		    session, message);
-	    
-	    this.setMessageStamp(message);
-	    
+
 	    this.sendMessage(producer, messageToSend);
 
 	    this.closeConnection(connection);
@@ -64,6 +63,8 @@ public abstract class GenericMessageProducer  extends TopicActor  {
 
 	this.producer = this.createMsgProducerFromSession(this.session, topic);
     }
+    
+
     
     protected abstract String getTopicName();
     
@@ -97,12 +98,6 @@ public abstract class GenericMessageProducer  extends TopicActor  {
 	producer.send(message);
     }
     
-    private void setMessageStamp(Serializable message){
-	
-	if(message instanceof MessageWrapper){
-	    MessageWrapper msgWrapper = (MessageWrapper)message;
-	    msgWrapper.stampMessage(this.getNodeLocalAddress(), new Date());
-	}
-    }
+    
 
 }

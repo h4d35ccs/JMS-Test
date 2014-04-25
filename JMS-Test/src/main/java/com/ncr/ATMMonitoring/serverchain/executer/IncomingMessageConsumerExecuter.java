@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.jms.JMSException;
-import javax.jms.MessageListener;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +59,9 @@ public class IncomingMessageConsumerExecuter {
 		this.consumeMessagesFromChildren(childrenBrokerIp);
 
 	    } catch (JMSException e) {
-		logger.error(e.getMessage(), e);
+
+		this.hanndleJMSException(e);
+
 	    }
 
 	}
@@ -78,12 +78,44 @@ public class IncomingMessageConsumerExecuter {
 
     }
 
+    private void handdleConsumerInUseForClientException(JMSException e)
+	    throws JMSException {
+
+	if (e.getMessage().contains("Durable consumer is in use for client")) {
+
+	    this.disconectAllConsumers();
+
+	} else {
+	    logger.error(e.getMessage(), e);
+	}
+    }
+    
+    private void disconectAllConsumers() throws JMSException{
+	
+	for (Map.Entry<String, TopicConsumer> entry : this.destinationsAndConsumerInstance
+		    .entrySet()) {
+		entry.getValue().disconect();
+	    }
+    }
+
+    private void hanndleJMSException(JMSException e) {
+	try {
+
+	    handdleConsumerInUseForClientException(e);
+
+	} catch (JMSException e1) {
+	    logger.error("can not recovery from:" + e.getMessage(), e1);
+
+	}
+
+    }
+
     private void consumeMessageFromChild(String childBrokerIp)
 	    throws JMSException {
 
 	IncomingMessageConsumer incomingConsumer = (IncomingMessageConsumer) this
 		.getTopicConsumerInstance(childBrokerIp);
-	
+
 	String completeBrokerURL = this.chainLinkPosition
 		.generateRemoteBrokerUrl(childBrokerIp);
 
@@ -112,4 +144,5 @@ public class IncomingMessageConsumerExecuter {
 
 	return topicConsumer;
     }
+
 }

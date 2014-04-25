@@ -23,7 +23,7 @@ public abstract class GenericListener implements MessageListener {
     @Override
     public void onMessage(Message message) {
 	try {
-
+	   
 	    this.processReceivedMessage(message);
 
 	} catch (JMSException e) {
@@ -38,5 +38,9 @@ public abstract class GenericListener implements MessageListener {
     }
 
     protected abstract MessageProcessor getMessageProcessor();
+    
+    
+	
+
 
 }

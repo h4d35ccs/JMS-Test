@@ -135,4 +135,5 @@ public abstract class TopicActor {
     protected String getIncomingTopicName() {
 	return this.chainLinkInformation.getIncomingTopicName();
     }
+    
 }
