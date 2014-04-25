@@ -30,20 +30,19 @@ public abstract class ActiveMQMessageProcessor extends MessageProcessor {
 
     protected ActiveMQMessage extractActiveMQMessageFromJMSMessage(
 	    Message message) {
-	ActiveMQMessage msg = null;
+	
+	this.validateThatMessageIsAnActiveMQMessage(message);
+	ActiveMQMessage  msg = (ActiveMQMessage) message;
 
-	if (message instanceof ActiveMQMessage) {
-
-	    msg = (ActiveMQMessage) message;
-
-	} else {
-
+	return msg;
+    }
+    
+    private void validateThatMessageIsAnActiveMQMessage( Message message){
+	if (!(message instanceof ActiveMQMessage)) {
 	    this.generateArgumentExeption(
 		    "The message received should be instance of  ActiveMQMessage, received: ",
 		    message.getClass());
 	}
-
-	return msg;
     }
 
    
