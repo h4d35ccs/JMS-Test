@@ -3,11 +3,14 @@ package com.ncr.ATMMonitoring.serverchain.message.wrapper;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.VisitableMessageWrapper;
+
 /**
  * @author Otto Abreu
  * 
  */
-public abstract class MessageWrapper implements Serializable {
+public abstract class MessageWrapper implements Serializable, VisitableMessageWrapper {
 
     /**
      * 
@@ -17,13 +20,13 @@ public abstract class MessageWrapper implements Serializable {
     private String message;
     private int id;
     private Date generatedDate;
-    private String stamp ="";
-    
-    public MessageWrapper (){
-	
+    private String stamp = "";
+    private SpecificMessage specificMessage;
+
+    public MessageWrapper() {
+
 	this.generatedDate = new Date();
     }
- 
 
     public MessageWrapper(String message, int id) {
 	super();
@@ -43,17 +46,23 @@ public abstract class MessageWrapper implements Serializable {
     public Date getGeneratedDate() {
 	return generatedDate;
     }
-   
-  
+
     public String getStamp() {
-        return stamp;
+	return stamp;
     }
 
     public void setStamp(String stamp) {
-        this.stamp = stamp;
+	this.stamp = stamp;
     }
     
-    
+    public SpecificMessage getSpecificMessage() {
+        return specificMessage;
+    }
+
+    public void setSpecificMessage(SpecificMessage specificMessage) {
+        this.specificMessage = specificMessage;
+    }
+
     @Override
     public String toString() {
 	StringBuffer objectInString = new StringBuffer("[");
