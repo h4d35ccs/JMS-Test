@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.message.processor.MessageProcessor;
-import com.ncr.ATMMonitoring.serverchain.message.processor.ObjectMessageProcessor;
 
 /**
  * @author Otto Abreu
