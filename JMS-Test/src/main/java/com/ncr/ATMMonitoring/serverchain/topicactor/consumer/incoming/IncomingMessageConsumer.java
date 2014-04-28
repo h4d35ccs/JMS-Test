@@ -44,7 +44,6 @@ public class IncomingMessageConsumer extends TopicConsumer {
 
     @Override
     protected String getTopicName() {
-	// TODO Auto-generated method stub
 	return this.getIncomingTopicName();
     }
 
