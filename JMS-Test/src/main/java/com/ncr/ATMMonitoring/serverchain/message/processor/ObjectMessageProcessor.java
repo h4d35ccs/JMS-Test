@@ -9,14 +9,24 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * @author Otto Abreu
  * 
  */
+@Component
 public abstract class ObjectMessageProcessor extends MessageProcessor{
 
+    
+    @Autowired
+    private ChainLinkInformation chainLinkInformation;
+    
+    
     @Override
     public void processReceivedMessage(Message message) {
 
@@ -79,6 +89,11 @@ public abstract class ObjectMessageProcessor extends MessageProcessor{
     }
 
     protected abstract void processMessage(MessageWrapper wrapper);
+    
+    
+    protected String getLocalBrokerURL(){
+	return this.chainLinkInformation.getLocalBrokerUrl();
+    }
 
     
 }
