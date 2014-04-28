@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.ncr.ATMMonitoring.serverchain.message.Stamper;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageStamp;
 
-@Component("outgoingProducer")
+@Component("outgoingMessageProducer")
 public class OutgoingMessageProducer  extends GenericMessageProducer implements Stamper  {
 
     @Autowired
