@@ -35,6 +35,11 @@ public abstract class TopicActor {
 
     protected static final int USE_CHILD_INCOMING_BROKER_URL = 2;
 
+    protected static final int USE_EXTERNAL_BROKER_URL = 3;
+
+    protected String externalBrokerUrl;
+
+
     protected ConnectionFactory getConnectionFactory(String clientId,
 	    int brokerType) {
 
@@ -75,12 +80,27 @@ public abstract class TopicActor {
 	    url = this.chainLinkInformation.getParentOutgoingTopicUrl();
 	    break;
 
+	case USE_EXTERNAL_BROKER_URL:
+
+	    this.validateNotNullExternalBrokerUrl();
+
+	    url = this.externalBrokerUrl;
+
+	    break;
+
 	default:
 	    throw new IllegalArgumentException(
 		    "Unknown broker type, use TopicActor constants for defining the broker type, Received: "
 			    + brokerType);
 	}
 	return url;
+    }
+
+    private void validateNotNullExternalBrokerUrl() {
+	if (this.externalBrokerUrl == null) {
+	    throw new IllegalArgumentException(
+		    "The external broker URL was not set, please use the setter method: public void setExternalBrokerUrl(String externalBrokerUrl) ");
+	}
     }
 
     protected Connection getAndStartJMSConnection(ConnectionFactory factory)
@@ -136,4 +156,8 @@ public abstract class TopicActor {
 	return this.chainLinkInformation.getIncomingTopicName();
     }
     
+    protected void setExternalBrokerUrl(String externalBrokerUrl) {
+        this.externalBrokerUrl = externalBrokerUrl;
+    }
+
 }

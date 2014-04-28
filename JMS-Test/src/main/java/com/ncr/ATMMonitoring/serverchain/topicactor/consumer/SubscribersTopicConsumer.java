@@ -18,7 +18,7 @@ public class SubscribersTopicConsumer extends TopicConsumer {
     @Override
     public void setup() throws JMSException {
 	if (!this.isConnected()) {
-	   
+
 	    this.setupConnectionFactoryAndSession();
 	    Destination consumerTopic = AdvisorySupport
 		    .getConnectionAdvisoryTopic();
@@ -45,13 +45,13 @@ public class SubscribersTopicConsumer extends TopicConsumer {
 
     @Override
     protected int getBrokerType() {
-	// TODO Auto-generated method stub
+
 	return USE_LOCAL_BROKER_URL;
     }
 
     @Override
     protected MessageListener getSpecificListener() {
-	
+
 	ChildrenSubscribersListener stl = (ChildrenSubscribersListener) this
 		.getMessageListenerFromSpringContext(this.springContext,
 			ChildrenSubscribersListener.class);
@@ -60,7 +60,9 @@ public class SubscribersTopicConsumer extends TopicConsumer {
 
     @Override
     protected String getTopicName() {
-	return null;
+
+	throw new UnsupportedOperationException(
+		"This class uses AdvisorySupport.getConnectionAdvisoryTopic() to get the topic, calling this method is not valid");
     }
 
 }

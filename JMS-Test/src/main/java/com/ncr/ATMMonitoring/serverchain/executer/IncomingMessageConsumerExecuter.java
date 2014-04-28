@@ -120,8 +120,7 @@ public class IncomingMessageConsumerExecuter {
 		.generateRemoteBrokerUrl(childBrokerIp);
 
 	logger.debug("remote child to consume from: " + completeBrokerURL);
-	incomingConsumer.setRemoteChildBrokerUrl(completeBrokerURL);
-	incomingConsumer.setup();
+	incomingConsumer.setup(completeBrokerURL);
 	incomingConsumer.consumeMessage();
     }
 

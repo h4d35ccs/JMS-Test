@@ -90,6 +90,11 @@ public abstract class TopicConsumer extends TopicActor {
 	}
     }
     
+    public void setup(String remoteBrokerUrl) throws JMSException {
+	this.setExternalBrokerUrl(remoteBrokerUrl);
+	this.setup();
+    }
+    
     protected void setupConnectionFactoryAndSession() throws JMSException{
 	
 	ConnectionFactory connectionFactory = this

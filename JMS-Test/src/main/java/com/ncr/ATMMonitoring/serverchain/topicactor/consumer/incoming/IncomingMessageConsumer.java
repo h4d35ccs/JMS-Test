@@ -3,9 +3,6 @@
  */
 package com.ncr.ATMMonitoring.serverchain.topicactor.consumer.incoming;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
 import javax.jms.MessageListener;
 
 import org.apache.log4j.Logger;
@@ -26,23 +23,7 @@ public class IncomingMessageConsumer extends TopicConsumer {
     private static final Logger logger = Logger
 	    .getLogger(IncomingMessageConsumer.class);
 
-    private String remoteChildBrokerUrl;
-    
-    
-    @Override
-    protected void setupConnectionFactoryAndSession() throws JMSException {
-
-	ConnectionFactory connectionFactory = this.getConnectionFactory(
-		this.getSubscriberId(), this.remoteChildBrokerUrl);
-	logger.debug("creating incoming consumer connection to "+this.remoteChildBrokerUrl);
-
-	Connection connection = this
-		.getAndStartJMSConnection(connectionFactory);
-
-	this.setSession(this.createJMSSession(connection));
-    }
-
-    @Override
+     @Override
     protected String getSubscriberId() {
 	logger.debug("the subscriber parent id: " + this.getNodeLocalAddress());
 	return this.getClientId(PARENT_SUBSCRIBER_BASE_ID);
@@ -50,25 +31,21 @@ public class IncomingMessageConsumer extends TopicConsumer {
 
     @Override
     protected int getBrokerType() {
-	// not in use the incoming uses several urls
-	// this method is not expected to be called
-	throw new UnsupportedOperationException("the incoming Msg consumer does not use a broker type");
+
+	return USE_EXTERNAL_BROKER_URL;
 
     }
 
     @Override
     protected MessageListener getSpecificListener() {
-	return this.getMessageListenerFromSpringContext(this.springContext,IncomingMessageListener.class);
+	return this.getMessageListenerFromSpringContext(this.springContext,
+		IncomingMessageListener.class);
     }
 
     @Override
     protected String getTopicName() {
 	// TODO Auto-generated method stub
 	return this.getIncomingTopicName();
-    }
-
-    public void setRemoteChildBrokerUrl(String remoteChildBrokerUrl) {
-	this.remoteChildBrokerUrl = remoteChildBrokerUrl;
     }
 
 }
