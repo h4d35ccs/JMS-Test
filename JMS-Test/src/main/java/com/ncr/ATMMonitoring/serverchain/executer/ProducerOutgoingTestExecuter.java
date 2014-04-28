@@ -19,7 +19,7 @@ public class ProducerOutgoingTestExecuter {
     private ChainLinkInformation chainLinkPosition;
 
     @Autowired
-    private GenericMessageProducer outgoingProducer;
+    private GenericMessageProducer outgoingMessageProducer;
 
     // private static final Logger logger = Logger
     // .getLogger(ProducerTestExecuter.class);
@@ -34,7 +34,7 @@ public class ProducerOutgoingTestExecuter {
 	    OutgoingMessage outMessage = new OutgoingMessage(
 		    "Outgoing message to send from: " + localUrl, this.count++);
 
-	    this.outgoingProducer.sendMessage(outMessage);
+	    this.outgoingMessageProducer.sendMessage(outMessage);
 	}
     }
 }
