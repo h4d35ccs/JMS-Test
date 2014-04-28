@@ -124,7 +124,7 @@ public class IncomingMessageConsumerExecuter {
 	incomingConsumer.consumeMessage();
     }
 
-    private TopicConsumer getTopicConsumerInstance(String childBrokerIp) {
+    private synchronized TopicConsumer getTopicConsumerInstance(String childBrokerIp) {
 
 	TopicConsumer topicConsumer = null;
 
