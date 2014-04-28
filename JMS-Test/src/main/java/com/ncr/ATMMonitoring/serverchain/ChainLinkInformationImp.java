@@ -84,9 +84,12 @@ public class ChainLinkInformationImp implements ChainLinkInformation {
     
     @Override
     public boolean isOnlyNode(){
+	
 	boolean isOnlyNode = false;
 	
-	if(isFirstNode() && isLeaf()){
+	if(isFirstNode() && this.childrenLinkListHandler.getChildrenSubscribed()
+		.isEmpty()){
+	    
 	    isOnlyNode = true;
 	}
 	return isOnlyNode;
