@@ -40,7 +40,6 @@ public abstract class GenericMessageProducer  extends TopicActor implements Stam
 		    session, message);
 
 	    this.sendMessage(producer, messageToSend);
-
 	    this.closeConnection(connection);
 
 	    logger.debug("message sent: " + message);
