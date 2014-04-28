@@ -26,29 +26,27 @@ import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
 @Component
 public abstract class TopicConsumer extends TopicActor {
 
-
     private Session session;
 
     private boolean connected = false;
 
     private MessageConsumer messageConsumer;
 
-    private static final Logger logger = Logger
-	    .getLogger(TopicConsumer.class);
-    
+    private static final Logger logger = Logger.getLogger(TopicConsumer.class);
+
     @Autowired
     protected ApplicationContext springContext;
 
     protected abstract String getSubscriberId();
-    
+
     protected abstract int getBrokerType();
-    
+
     protected abstract MessageListener getSpecificListener();
-    
+
     protected abstract String getTopicName();
 
-    public void consumeMessage(){
-	
+    public void consumeMessage() {
+
 	try {
 
 	    this.setMessageListener();
@@ -66,22 +64,19 @@ public abstract class TopicConsumer extends TopicActor {
 	    }
 	}
     }
-    
-    
-    protected void setMessageListener()
-	    throws JMSException {
+
+    protected void setMessageListener() throws JMSException {
 	this.messageConsumer.setMessageListener(this.getSpecificListener());
     }
-    
-    
+
     public void setup() throws JMSException {
 
 	if (!this.connected) {
 
 	    this.setupConnectionFactoryAndSession();
-	    
-	    Topic topic = this.getTopicFromSession(session,
-		    this.getTopicName());
+
+	    Topic topic = this
+		    .getTopicFromSession(session, this.getTopicName());
 
 	    this.messageConsumer = this.createMessageConsumer(this.session,
 		    topic);
@@ -89,30 +84,30 @@ public abstract class TopicConsumer extends TopicActor {
 	    this.connected = true;
 	}
     }
-    
+
     public void setup(String remoteBrokerUrl) throws JMSException {
 	this.setExternalBrokerUrl(remoteBrokerUrl);
 	this.setup();
     }
-    
-    protected void setupConnectionFactoryAndSession() throws JMSException{
-	
-	ConnectionFactory connectionFactory = this
-		    .createConnectionFactory(this.getBrokerType());
 
-	    logger.debug("creating consumer connection");
+    protected void setupConnectionFactoryAndSession() throws JMSException {
 
-	    Connection connection = this
-		    .getAndStartJMSConnection(connectionFactory);
+	ConnectionFactory connectionFactory = this.createConnectionFactory(this
+		.getBrokerType());
 
-	    this.session = this.createJMSSession(connection);
+	logger.debug("creating consumer connection");
+
+	Connection connection = this
+		.getAndStartJMSConnection(connectionFactory);
+
+	this.session = this.createJMSSession(connection);
 
     }
 
     private ConnectionFactory createConnectionFactory(int brokerType) {
 
-	ConnectionFactory connectionFactory = this.getConnectionFactory(this
-		.getSubscriberId(),brokerType);
+	ConnectionFactory connectionFactory = this.getConnectionFactory(
+		this.getSubscriberId(), brokerType);
 	return connectionFactory;
     }
 
@@ -120,36 +115,39 @@ public abstract class TopicConsumer extends TopicActor {
 	    throws JMSException {
 	return session.createDurableSubscriber(topic, this.getSubscriberId());
     }
-    
+
     @PreDestroy
     public void disconect() throws JMSException {
-	this.session.close();
+	if (this.session != null) {
+	    this.session.close();
+	}
 	this.connected = false;
     }
-    
-    protected  MessageListener getMessageListenerFromSpringContext(ApplicationContext springContext , Class<?> listenerClass){
-	 return (MessageListener) springContext.getBean(listenerClass);
 
-   }
-    
+    protected MessageListener getMessageListenerFromSpringContext(
+	    ApplicationContext springContext, Class<?> listenerClass) {
+	return (MessageListener) springContext.getBean(listenerClass);
+
+    }
+
     protected void setMessageConsumer(MessageConsumer messageConsumer) {
-        this.messageConsumer = messageConsumer;
+	this.messageConsumer = messageConsumer;
     }
 
     protected Session getSession() {
-        return session;
+	return session;
     }
-    
+
     protected void setSession(Session session) {
-        this.session = session;
+	this.session = session;
     }
 
     protected boolean isConnected() {
-        return connected;
+	return connected;
     }
 
     protected void setConnected(boolean connected) {
-        this.connected = connected;
+	this.connected = connected;
     }
 
 }
