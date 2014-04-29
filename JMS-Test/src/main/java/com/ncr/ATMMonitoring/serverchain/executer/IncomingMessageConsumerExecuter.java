@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
 import com.ncr.ATMMonitoring.serverchain.ChildrenLinkListHandler;
+import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.topicactor.consumer.TopicConsumer;
 import com.ncr.ATMMonitoring.serverchain.topicactor.consumer.incoming.IncomingMessageConsumer;
 
@@ -44,10 +45,10 @@ public class IncomingMessageConsumerExecuter {
     @Scheduled(cron = "1 * * * * *")
     public void runIncomingConsumer() {
 
-	boolean isLeafNode = this.chainLinkPosition.isLeaf();
-	logger.debug("is leaf node?: " + isLeafNode);
+	NodePosition position = this.chainLinkPosition.getNodePosition();
+	logger.debug("is leaf node?: " + position);
 
-	if (!isLeafNode) {
+	if (!(position.equals(NodePosition.LEAF_NODE))) {
 	    try {
 
 		Set<String> childrenBrokerIp = this.childrenLinkListHandler
@@ -67,6 +68,7 @@ public class IncomingMessageConsumerExecuter {
 	}
 
     }
+    
 
     private void consumeMessagesFromChildren(Set<String> childrenBrokerIp)
 	    throws JMSException {

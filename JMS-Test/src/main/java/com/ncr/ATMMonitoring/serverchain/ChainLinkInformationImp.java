@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
+ * Returns the information regarding the node, such as the position, the topics
+ * names, the brokers URL
+ * 
  * @author Otto Abreu
  * 
  */
@@ -37,28 +40,45 @@ public class ChainLinkInformationImp implements ChainLinkInformation {
 
     @Autowired
     private ChildrenLinkListHandler childrenLinkListHandler;
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.ChainLinkInformation#getNodePosition()
+     */
+    @Override
+    public NodePosition getNodePosition() {
+	NodePosition nodePosition = null;
 
-    public boolean hasParentNode() {
-	boolean hasParent = false;
+	if (this.isFirstNode()) {
 
-	if (!StringUtils.isEmpty(this.parentOutgoingTopicUrl)) {
+	    nodePosition = NodePosition.FIRST_NODE;
 
-	    hasParent = true;
+	} else if (this.isLeaf()) {
+
+	    nodePosition = NodePosition.LEAF_NODE;
+
+	} else if (this.isMiddleNode()) {
+
+	    nodePosition = NodePosition.MIDDLE_NODE;
+
+	} else if (this.isOnlyNode()) {
+
+	    nodePosition = NodePosition.ONLY_NODE;
 	}
-	return hasParent;
+
+	return nodePosition;
     }
 
-    @Override
-    public boolean isFirstNode() {
+    private boolean isFirstNode() {
 	boolean isFirstNode = false;
+	
 	if (!this.hasParentNode()) {
 	    isFirstNode = true;
 	}
 	return isFirstNode;
     }
 
-    @Override
-    public boolean isLeaf() {
+    private boolean isLeaf() {
 	boolean isLeaf = false;
 
 	if (hasParentNode()
@@ -70,8 +90,8 @@ public class ChainLinkInformationImp implements ChainLinkInformation {
 	return isLeaf;
     }
 
-    @Override
-    public boolean isMiddleNode() {
+    private boolean isMiddleNode() {
+	
 	boolean isMiddleNode = false;
 
 	if (hasParentNode()
@@ -81,52 +101,87 @@ public class ChainLinkInformationImp implements ChainLinkInformation {
 	}
 	return isMiddleNode;
     }
-    
-    @Override
-    public boolean isOnlyNode(){
-	
+
+    private boolean isOnlyNode() {
+
 	boolean isOnlyNode = false;
-	
-	if(isFirstNode() && this.childrenLinkListHandler.getChildrenSubscribed()
-		.isEmpty()){
-	    
+
+	if (isFirstNode()
+		&& this.childrenLinkListHandler.getChildrenSubscribed()
+			.isEmpty()) {
+
 	    isOnlyNode = true;
 	}
 	return isOnlyNode;
     }
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.ChainLinkInformation#hasParentNode()
+     */
+    @Override
+    public boolean hasParentNode() {
+	boolean hasParent = false;
 
+	if (!StringUtils.isEmpty(this.parentOutgoingTopicUrl)) {
+
+	    hasParent = true;
+	}
+	return hasParent;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.ChainLinkInformation#getParentOutgoingTopicUrl()
+     */
     @Override
     public String getParentOutgoingTopicUrl() {
 	String parentOutgoingTopicUrl = "";
-	
-	parentOutgoingTopicUrl = this.generateRemoteBrokerUrl(this.parentOutgoingTopicUrl);
-	
+
+	parentOutgoingTopicUrl = this
+		.generateRemoteBrokerUrl(this.parentOutgoingTopicUrl);
+
 	System.out
 		.println("parentOutgoingTopicUrl-->" + parentOutgoingTopicUrl);
-	
+
 	return parentOutgoingTopicUrl;
     }
-
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.ChainLinkInformation#getOutgoingTopicName()
+     */
     @Override
     public String getOutgoingTopicName() {
 	return outgoingTopicName;
     }
-
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.ChainLinkInformation#getLocalBrokerUrl()
+     */
     @Override
     public String getLocalBrokerUrl() {
 	return localBrokerUrl;
     }
-
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.ChainLinkInformation#getIncomingTopicName()
+     */
     @Override
     public String getIncomingTopicName() {
-	// TODO Auto-generated method stub
+
 	return this.incomingTopicName;
     }
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.ChainLinkInformation#generateRemoteBrokerUrl(java.lang.String)
+     */
+    @Override
+    public String generateRemoteBrokerUrl(String ip) {
+	String completeRemoteUrl = "";
 
-    
-    public String generateRemoteBrokerUrl(String ip){
-	String completeRemoteUrl ="";
-	
 	if (!StringUtils.isEmpty(this.brokerUrlPattern)) {
 
 	    completeRemoteUrl = this.brokerUrlPattern;
@@ -139,4 +194,5 @@ public class ChainLinkInformationImp implements ChainLinkInformation {
 	}
 	return completeRemoteUrl;
     }
+
 }

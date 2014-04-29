@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
+import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateDataResponse;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
 import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
 
@@ -33,7 +34,7 @@ public class ProducerIncomingTestExecuter {
 
 	    IncomingMessage incomingMessage = new IncomingMessage(
 		    "Incoming message to send from: " + localUrl, this.count++);
-
+	    incomingMessage.setSpecificMessage(new UpdateDataResponse());
 	    this.incomingMessageProducer.sendMessage(incomingMessage);
 	}
     }

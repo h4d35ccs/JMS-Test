@@ -7,23 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
+import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy;
+import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.StrategyFactory;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
 import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
 
 /**
+ * Concrete implementation of WrapperVisitor
+ * 
+ * @see WrapperVisitor
+ * 
  * @author Otto Abreu
  * 
  */
 @Component
 public class WrapperVisitorImp implements WrapperVisitor {
 
-   
-    @Resource(name="outgoingMessageProducer")
+    @Resource(name = "outgoingMessageProducer")
     private GenericMessageProducer outgoingProducer;
-   
-    @Resource(name="incomingMessageProducer")
+
+    @Resource(name = "incomingMessageProducer")
     private GenericMessageProducer incomingProducer;
 
     @Autowired
@@ -32,55 +39,81 @@ public class WrapperVisitorImp implements WrapperVisitor {
     private static final Logger logger = Logger
 	    .getLogger(WrapperVisitorImp.class);
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.WrapperVisitor
+     * #visit(com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage)
+     */
     @Override
     public void visit(IncomingMessage message) {
 	logger.debug("visiting incoming Message");
-	if(this.passIncomingMessageToParentNode()){
-	    this.incomingProducer.sendMessage(message);
+	this.applyStrategy(message);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.WrapperVisitor
+     * #visit(com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage)
+     */
+    @Override
+    public void visit(OutgoingMessage message) {
+	logger.debug("visiting outgoing Message");
+	this.applyStrategy(message);
+
+    }
+
+    private void applyStrategy(MessageWrapper message) {
+	
+	SpecificMessage specificMessage = message.getSpecificMessage();
+	NodePosition nodePosition = this.chainLinkInformation.getNodePosition();
+	
+	SpecifcMessageProcessStrategy strategyToAply = this.getStrategyToApply(
+		nodePosition, specificMessage);
+
+	if (strategyToAply.canProcessSpecificMessage()) {
+
+	    this.processMessage(strategyToAply, message);
+
 	}
     }
 
-    @Override
-    public void visit(OutgoingMessage message) {
-	SpecificMessage specificMessage = message.getSpecificMessage();
-	logger.debug("visiting outgoing Message");
-	if (this.passOutgoingMessageToNextNode(specificMessage)) {
+    private void passMessageToNextNode(MessageWrapper message) {
+
+	if (message instanceof OutgoingMessage) {
 
 	    this.outgoingProducer.sendMessage(message);
 
-	} else if (this.isFinalProccessingNode()) {
+	} else if (message instanceof IncomingMessage) {
 
+	    this.incomingProducer.sendMessage(message);
 	}
 
     }
 
-    private boolean passOutgoingMessageToNextNode(
-	    SpecificMessage specificMessage) {
-	boolean passMessage = false;
+    private void processMessage(SpecifcMessageProcessStrategy strategyToAply,
+	    MessageWrapper message) {
 
-	if (this.chainLinkInformation.isMiddleNode()
-		&& this.canProcessMessage(specificMessage)) {
-	    passMessage = true;
+	strategyToAply.processSpecificMessage();
+
+	if (strategyToAply.passToOtherNode()) {
+	    logger.debug("is going to pass message visitor: "+strategyToAply.passToOtherNode());
+	    this.passMessageToNextNode(message);
 	}
-
-	return passMessage;
     }
 
-    private boolean passIncomingMessageToParentNode() {
-	boolean passMessage = true;
-	if (this.chainLinkInformation.isFirstNode()) {
-	    passMessage = false;
-	}
+    private SpecifcMessageProcessStrategy getStrategyToApply(
+	    NodePosition nodePosition, SpecificMessage message) {
 
-	return passMessage;
-    }
+	SpecifcMessageProcessStrategy strategy = StrategyFactory
+		.getStrategyForSpecificMessage(message);
+	
+	strategy.setupStrategy(nodePosition, message);
 
-    private boolean canProcessMessage(SpecificMessage specificMessage) {
-	return false;
-    }
-
-    private boolean isFinalProccessingNode() {
-	return this.chainLinkInformation.isLeaf();
+	return strategy;
     }
 
 }

@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
+import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.UpdateDataRequest;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
 import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
 
@@ -30,9 +32,11 @@ public class ProducerOutgoingTestExecuter {
     public void runProducer() {
 
 	if (!chainLinkPosition.hasParentNode()) {
-
-	    OutgoingMessage outMessage = new OutgoingMessage(
+	    UpdateDataRequest udr = new UpdateDataRequest("192.168.1.1", 3);
+	    MessageWrapper outMessage = new OutgoingMessage(
 		    "Outgoing message to send from: " + localUrl, this.count++);
+	   
+	    outMessage.setSpecificMessage(udr);
 
 	    this.outgoingMessageProducer.sendMessage(outMessage);
 	}
