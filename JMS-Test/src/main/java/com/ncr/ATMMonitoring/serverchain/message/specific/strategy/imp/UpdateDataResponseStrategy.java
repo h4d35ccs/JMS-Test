@@ -2,6 +2,7 @@ package com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp;
 
 import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy;
 
 /**
@@ -39,14 +40,15 @@ public class UpdateDataResponseStrategy implements
 	// TODO Auto-generated method stub
 
     }
-
-    /* (non-Javadoc)
-     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#passToOtherNode()
+ 
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#broadcastDirection()
      */
     @Override
-    public boolean passToOtherNode() {
+    public BroadcastType broadcastDirection() {
 	// TODO Auto-generated method stub
-	return false;
+	return BroadcastType.ONE_WAY;
     }
 
 }
