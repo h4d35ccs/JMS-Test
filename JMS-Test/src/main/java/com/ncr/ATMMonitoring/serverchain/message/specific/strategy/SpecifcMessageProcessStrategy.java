@@ -5,8 +5,10 @@ import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
 
 /**
  * <pre>
- * Define an strategy to process an SpecifcMessage
- * In order to start the strategy, call fist the setup method
+ * Define an strategy to process an SpecifcMessage.
+ * In order to start the strategy, call fist the setup method.
+ * 
+ * The strategy must define the broadcast direction 
  * 
  * @author Otto Abreu
  * </pre>
@@ -37,15 +39,20 @@ public interface SpecifcMessageProcessStrategy {
 
     /**
      * <pre>
-     * if true, it will try to
-     * pass the message to the next/previous node.
+     * Indicate the way this strategy will broadcast the message.
+     * The broadcast could be:
+     * * One way: 
+     * 		* if is a incoming message: will broadcast only to the parent node
+     * 		* if is a outgoing message: will broadcast to all children
      * 
-     * @return boolean
+     * * two way: will broadcast to the parent and children
+     * 
+     * * NONE: wil not broadcast the message to any other node
+     * 
+     * @return BroadcastType
      * </pre>
      **/
-    boolean passToOtherNode();
+    BroadcastType broadcastDirection();
     
-    
-   
 
 }
