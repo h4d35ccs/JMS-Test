@@ -6,6 +6,7 @@ import com.ncr.ATMMonitoring.routertable.RouterTableHandler;
 import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.UpdateDataRequest;
+import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy;
 
 /**
@@ -55,18 +56,31 @@ public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy 
 
 	boolean canProcess = false;
 	UpdateDataRequest updateDataMessage = (UpdateDataRequest) this.messageToProcess;
-	
-	boolean matriculaPresentInTable = RouterTableHandler
-		.matriculaIsInRouterTable(updateDataMessage.getMatricula());
 
-	if ((this.nodePosition.equals(NodePosition.LEAF_NODE) || this.nodePosition
-		.equals(NodePosition.MIDDLE_NODE)) && matriculaPresentInTable) {
+	if (nodeIsLeafOrMiddleAndMatriculaIsPresent(updateDataMessage)) {
 
 	    canProcess = true;
 	}
 
 	logger.debug("can process the message? " + canProcess);
 	return canProcess;
+    }
+
+    private boolean nodeIsLeafOrMiddleAndMatriculaIsPresent(
+	    UpdateDataRequest updateDataMessage) {
+
+	boolean matriculaPresentInTable = RouterTableHandler
+		.matriculaIsInRouterTable(updateDataMessage.getMatricula());
+
+	if ((this.nodePosition.equals(NodePosition.LEAF_NODE) || this.nodePosition
+		.equals(NodePosition.MIDDLE_NODE)) && matriculaPresentInTable) {
+	   
+	    return true;
+
+	} else {
+
+	    return false;
+	}
     }
 
     /*
@@ -86,17 +100,19 @@ public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy 
      * (non-Javadoc)
      * 
      * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.
-     * SpecifcMessageProcessStrategy#forcePassToOtherNode()
+     * SpecifcMessageProcessStrategy#broadcastDirection()
      */
     @Override
-    public boolean passToOtherNode() {
-	boolean passMessage = false;
+    public BroadcastType broadcastDirection() {
+	
+	BroadcastType passMessage = BroadcastType.NONE;
 
 	if (!this.finalProcessing && canProcessSpecificMessage()) {
 
-	    passMessage = true;
+	    passMessage = BroadcastType.ONE_WAY;
 	}
-	logger.debug("is going to pass the message? "+passMessage);
+	logger.debug("is going to broadcast the message? " + passMessage);
+	
 	return passMessage;
     }
 
