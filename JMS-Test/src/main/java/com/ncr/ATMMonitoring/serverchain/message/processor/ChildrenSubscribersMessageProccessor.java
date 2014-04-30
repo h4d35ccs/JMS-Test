@@ -12,32 +12,40 @@ import org.springframework.stereotype.Component;
 import com.ncr.ATMMonitoring.serverchain.ChildrenLinkListHandler;
 
 /**
+ * Class that extract from the Connection information the URL of the subscribed
+ * children
+ * 
  * @author Otto Abreu
  * 
  */
 @Component("childrenSubscribersMessageProccessor")
-public class ChildrenSubscribersMessageProccessor extends ActiveMQMessageProcessor {
+public class ChildrenSubscribersMessageProccessor extends
+	ActiveMQMessageProcessor {
 
     @Autowired
     private ChildrenLinkListHandler childrenLinkHandler;
 
-
     protected void processMessage(DataStructure ds) {
 
-	String childId = this.getChildId(ds);
+	String subscriberId = this.getSubscriberId(ds);
+
+	this.registerOnlyChildSubscriptions(subscriberId);
+    }
+
+    private String getSubscriberId(DataStructure ds) {
+
+	ConnectionInfo connectionInfo = (ConnectionInfo) ds;
+	String subscriberId = connectionInfo.getClientId();
+	return subscriberId;
+    }
+
+    private void registerOnlyChildSubscriptions(String childId) {
 
 	if (ChildrenLinkListHandler.isChildSubscription(childId)) {
 
 	    String childUrlAndPort = this.getChildUrlAndPort(childId);
 	    this.addChildUrlAndPortToList(childUrlAndPort);
 	}
-    }
-
-    private String getChildId(DataStructure ds) {
-
-	ConnectionInfo connectionInfo = (ConnectionInfo) ds;
-	String childId = connectionInfo.getClientId();
-	return childId;
     }
 
     private String getChildUrlAndPort(String childId) {
@@ -60,7 +68,5 @@ public class ChildrenSubscribersMessageProccessor extends ActiveMQMessageProcess
 	// TODO Auto-generated method stub
 	return CommandTypes.CONNECTION_INFO;
     }
-    
-    
 
 }

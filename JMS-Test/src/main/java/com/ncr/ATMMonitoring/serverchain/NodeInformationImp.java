@@ -9,14 +9,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
+ * <pre>
+ * Concrete class of NodeInformation.
+ * 
  * Returns the information regarding the node, such as the position, the topics
  * names, the brokers URL
  * 
  * @author Otto Abreu
  * 
+ * </pre>
+ * 
  */
 @Component
-public class ChainLinkInformationImp implements ChainLinkInformation {
+public class NodeInformationImp implements NodeInformation {
 
     @Value("${jms.parent.outgoing.topic.url:}")
     private String parentOutgoingTopicUrl;

@@ -6,7 +6,7 @@ package com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor;
  *  
  *  Is part of a Visitor Pattern Implementation
  *  
- * @see  <a href="http://en.wikipedia.org/wiki/Visitor_pattern"> Visitor pattern in wikipedia</a>
+ * @see  <a href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor pattern in wikipedia</a>
  * 
  * @author Otto Abreu
  * 

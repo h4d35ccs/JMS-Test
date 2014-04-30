@@ -49,6 +49,8 @@ public interface SpecifcMessageProcessStrategy {
      * 
      * * NONE: wil not broadcast the message to any other node
      * 
+     * THE IMPLEMENTATION SHOULD NOT RETURN NULL
+     * 
      * @return BroadcastType
      * </pre>
      **/

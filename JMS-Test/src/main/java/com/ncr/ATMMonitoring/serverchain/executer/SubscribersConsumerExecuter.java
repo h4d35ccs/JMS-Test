@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.ncr.ATMMonitoring.serverchain.topicactor.consumer.TopicConsumer;
 
 /**
+ * Class that checks for messages related to extract the subscribers info
  * @author Otto Abreu
  *
  */

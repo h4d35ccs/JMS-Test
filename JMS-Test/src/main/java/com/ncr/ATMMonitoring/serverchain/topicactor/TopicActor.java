@@ -11,13 +11,13 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
+import com.ncr.ATMMonitoring.serverchain.NodeInformation;
 
 @Component
 public abstract class TopicActor {
 
     @Autowired
-    private ChainLinkInformation chainLinkInformation;
+    private NodeInformation nodeInformation;
 
     public static final String SUBSCRIBER_BASE_ID = "subscriber";
 
@@ -73,11 +73,11 @@ public abstract class TopicActor {
 
 	switch (brokerType) {
 	case USE_LOCAL_BROKER_URL:
-	    url = this.chainLinkInformation.getLocalBrokerUrl();
+	    url = this.nodeInformation.getLocalBrokerUrl();
 	    break;
 
 	case USE_PARENT_OUTGOING_BROKER_URL:
-	    url = this.chainLinkInformation.getParentOutgoingTopicUrl();
+	    url = this.nodeInformation.getParentOutgoingTopicUrl();
 	    break;
 
 	case USE_EXTERNAL_BROKER_URL:
@@ -137,9 +137,9 @@ public abstract class TopicActor {
 
 	String localAddress = "localhost";
 
-	if (!StringUtils.isEmpty(this.chainLinkInformation.getLocalBrokerUrl())) {
+	if (!StringUtils.isEmpty(this.nodeInformation.getLocalBrokerUrl())) {
 
-	    String[] addressSplitByProtocol = this.chainLinkInformation
+	    String[] addressSplitByProtocol = this.nodeInformation
 		    .getLocalBrokerUrl().split("://");
 	    String addressWithPort = addressSplitByProtocol[1];
 	    localAddress = addressWithPort;
@@ -149,11 +149,11 @@ public abstract class TopicActor {
     }
 
     protected String getOutgoingTopicName() {
-	return this.chainLinkInformation.getOutgoingTopicName();
+	return this.nodeInformation.getOutgoingTopicName();
     }
 
     protected String getIncomingTopicName() {
-	return this.chainLinkInformation.getIncomingTopicName();
+	return this.nodeInformation.getIncomingTopicName();
     }
     
     protected void setExternalBrokerUrl(String externalBrokerUrl) {

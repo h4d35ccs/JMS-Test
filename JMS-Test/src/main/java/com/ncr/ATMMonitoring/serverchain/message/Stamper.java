@@ -9,6 +9,9 @@ import java.io.Serializable;
  * 
  */
 public interface Stamper {
-
+    /**
+     * Set the stamp into the given message
+     * @param message
+     */
     void setMessageStamp(Serializable message);
 }

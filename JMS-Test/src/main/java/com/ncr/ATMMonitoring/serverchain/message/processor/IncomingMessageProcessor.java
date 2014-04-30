@@ -19,7 +19,7 @@ import com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.WrapperVisitor;
  * 
  */
 @Component("incomingMessageProcessor")
-public class IncomingMessageProcessor extends ObjectMessageProcessor implements Stamper {
+public class IncomingMessageProcessor extends MessageWrapperProcessor implements Stamper {
 
     private static final Logger logger = Logger
 	    .getLogger(IncomingMessageProcessor.class);

@@ -33,7 +33,6 @@ public final class StrategyFactory {
     private static SpecifcMessageProcessStrategy loadStrategyByAnnotation(
 	    Class<? extends SpecificMessage> messageClass) {
 
-	SpecifcMessageProcessStrategy strategyAsociatedToMessageInstance = null;
 
 	StrategyMapper mapper = StrategyFactory
 		.getAnnotationFromClass(messageClass);
@@ -41,10 +40,22 @@ public final class StrategyFactory {
 	Class<? extends SpecifcMessageProcessStrategy> strategyClassAsociated = mapper
 		.strategyMapping();
 
-	strategyAsociatedToMessageInstance = StrategyFactory
+	SpecifcMessageProcessStrategy strategyAsociatedToMessageInstance = StrategyFactory
 		.instantiateStrategyClass(strategyClassAsociated);
 
 	return strategyAsociatedToMessageInstance;
+    }
+    
+    private static StrategyMapper getAnnotationFromClass(
+	    Class<? extends SpecificMessage> messageClass) {
+	
+	StrategyMapper mapper = messageClass
+		.getAnnotation(StrategyMapper.class);
+	
+	StrategyFactory
+		.messageClassHaveStrategyAssociated(mapper, messageClass);
+
+	return mapper;
     }
 
     private static void messageClassHaveStrategyAssociated(
@@ -57,17 +68,7 @@ public final class StrategyFactory {
 	}
     }
 
-    private static StrategyMapper getAnnotationFromClass(
-	    Class<? extends SpecificMessage> messageClass) {
-	
-	StrategyMapper mapper = messageClass
-		.getAnnotation(StrategyMapper.class);
-	
-	StrategyFactory
-		.messageClassHaveStrategyAssociated(mapper, messageClass);
-
-	return mapper;
-    }
+   
 
     private static SpecifcMessageProcessStrategy instantiateStrategyClass(
 	    Class<? extends SpecifcMessageProcessStrategy> strategyClass) {

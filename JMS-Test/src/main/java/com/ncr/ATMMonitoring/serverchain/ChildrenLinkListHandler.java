@@ -12,8 +12,15 @@ import org.springframework.stereotype.Component;
 import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
 
 /**
+ * <pre>
+ * Class in charge of handling the child node subscription list.
+ * 
+ * This class provides methods to add or remove subscribers from the list,
+ *  and also to know if the given subscriber is register in the list .
+ * 
  * @author Otto Abreu
  * 
+ * </pre>
  */
 @Component
 public class ChildrenLinkListHandler {
@@ -34,7 +41,9 @@ public class ChildrenLinkListHandler {
 	if (this.childrenSubscribed.contains(childIpandPort)) {
 	    childSubscribed = true;
 	}
+	
 	logger.debug("is "+childIpandPort+" subscribed? "+childSubscribed);
+	
 	return childSubscribed;
     }
 
@@ -57,8 +66,10 @@ public class ChildrenLinkListHandler {
 	String childAddressAndPort = "";
 	int openBraketPosition = completeChildId
 		.indexOf(TopicActor.OPEN_ENCLOSING_BLOCK);
+	
 	int closeBraketPosition = completeChildId
 		.indexOf(TopicActor.CLOSE_ENCLOSING_BLOCK);
+	
 	if (openBraketPosition > 0 && closeBraketPosition > 0) {
 	    childAddressAndPort = completeChildId.substring(
 		    openBraketPosition + 1, closeBraketPosition);

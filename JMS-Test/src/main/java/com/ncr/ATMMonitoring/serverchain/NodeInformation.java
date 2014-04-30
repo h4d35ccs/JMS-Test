@@ -8,7 +8,7 @@ package com.ncr.ATMMonitoring.serverchain;
  * @author Otto Abreu
  *
  */
-public interface ChainLinkInformation {
+public interface NodeInformation {
     
     /**
      * True means that this node has a parent node associated

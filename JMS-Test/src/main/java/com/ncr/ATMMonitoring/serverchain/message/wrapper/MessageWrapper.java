@@ -7,8 +7,12 @@ import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.VisitableMessageWrapper;
 
 /**
- * @author Otto Abreu
+ * <pre>
+ * The wrapper is a class that holds the real messages that travels between nodes.
+ * Acts like a envelop.
  * 
+ * @author Otto Abreu
+ * </pre>
  */
 public abstract class MessageWrapper implements Serializable, VisitableMessageWrapper {
 

@@ -10,7 +10,12 @@ import org.springframework.stereotype.Component;
 import com.ncr.ATMMonitoring.serverchain.message.processor.MessageProcessor;
 
 /**
+ * <pre>
+ * Concrete class from GenericListener that sets the MessageProcessor in charge of 
+ * processing the related to the children subscribers
  * @author Otto Abreu
+ * 
+ * </pre>
  * 
  */
 @Component
@@ -21,7 +26,7 @@ public class ChildrenSubscribersListener extends GenericListener {
 
     @Override
     protected MessageProcessor getMessageProcessor() {
-	
+
 	return this.messageProccessor;
     }
 

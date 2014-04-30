@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
+import com.ncr.ATMMonitoring.serverchain.NodeInformation;
 import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.UpdateDataRequest;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
@@ -18,7 +18,7 @@ public class ProducerOutgoingTestExecuter {
     private String localUrl;
 
     @Autowired
-    private ChainLinkInformation chainLinkPosition;
+    private NodeInformation nodePosition;
 
     @Autowired
     private GenericMessageProducer outgoingMessageProducer;
@@ -31,7 +31,7 @@ public class ProducerOutgoingTestExecuter {
     @Scheduled(cron = "3 * * * * *")
     public void runProducer() {
 
-	if (!chainLinkPosition.hasParentNode()) {
+	if (!nodePosition.hasParentNode()) {
 	    UpdateDataRequest udr = new UpdateDataRequest("192.168.1.1", 3);
 	    MessageWrapper outMessage = new OutgoingMessage(
 		    "Outgoing message to send from: " + localUrl, this.count++);

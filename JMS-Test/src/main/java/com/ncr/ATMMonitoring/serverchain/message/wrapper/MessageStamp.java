@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
+ * Class in charge of generating an stamp to a wrapper
  * @author Otto Abreu
  * 
  */
@@ -18,7 +19,11 @@ public class MessageStamp {
     private static final Logger logger = Logger.getLogger(MessageStamp.class);
 
     private static final String STAMP_SEPARATOR = "--";
-
+    /**
+     * set the exit stamp to the given message
+     * @param message
+     * @param nodeLocalAddress
+     */
     public void setSendStampToMessageWraper(Serializable message,
 	    String nodeLocalAddress) {
 
@@ -53,13 +58,19 @@ public class MessageStamp {
     }
 
     private String sendStamp(String serverIp) {
+	
 	double secondsSinceSend = this.calculateTimeSinceSentOrReceived(
 		this.generatedDate, new Date());
 	return this.stampMessage(serverIp, secondsSinceSend, "Sent at");
     }
-
+    /**
+     * set the received stamp to the given message
+     * @param message
+     * @param nodeLocalAddress
+     */
     public void setReceivedStampToMessageWraper(Serializable message,
 	    String nodeLocalAddress) {
+	
 	MessageWrapper msgWrapper = this.extractInfoFromMessageWrapper(message,
 		nodeLocalAddress);
 	String stampUpdated = this.receivedStamp(nodeLocalAddress);
@@ -68,6 +79,7 @@ public class MessageStamp {
     }
 
     private String receivedStamp(String serverIp) {
+	
 	double secondsSinceSend = this.calculateTimeSinceSentOrReceived(
 		this.generatedDate, new Date());
 	return this.stampMessage(serverIp, secondsSinceSend, "Received at");

@@ -16,7 +16,7 @@ import com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.WrapperVisitor;
  * 
  */
 @Component("outgoingMessageProcessor")
-public class OutgoingMessageProcessor extends ObjectMessageProcessor implements Stamper {
+public class OutgoingMessageProcessor extends MessageWrapperProcessor implements Stamper {
 
     @Autowired
     private WrapperVisitor visitor;

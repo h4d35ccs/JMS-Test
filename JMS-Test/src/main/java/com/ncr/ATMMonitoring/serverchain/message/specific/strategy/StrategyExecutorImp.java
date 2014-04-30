@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.ChainLinkInformation;
+import com.ncr.ATMMonitoring.serverchain.NodeInformation;
 import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
@@ -33,7 +33,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
     private GenericMessageProducer incomingProducer;
 
     @Autowired
-    private ChainLinkInformation chainLinkInformation;
+    private NodeInformation nodeInformation;
 
     private SpecifcMessageProcessStrategy strategyToAply;
 
@@ -61,7 +61,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
     private void strategyExecutorSetup(MessageWrapper message) {
 
 	SpecificMessage specificMessage = message.getSpecificMessage();
-	NodePosition nodePosition = this.chainLinkInformation.getNodePosition();
+	NodePosition nodePosition = this.nodeInformation.getNodePosition();
 
 	this.messageWrapper = message;
 

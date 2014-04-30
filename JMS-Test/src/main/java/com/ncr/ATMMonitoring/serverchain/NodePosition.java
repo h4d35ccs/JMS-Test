@@ -1,7 +1,7 @@
 package com.ncr.ATMMonitoring.serverchain;
 
 /**
- * Define the positions that a node could have
+ * Define the possible positions that a node could have
  * @author Otto Abreu
  *
  */

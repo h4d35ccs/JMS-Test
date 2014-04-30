@@ -6,7 +6,18 @@ import org.apache.activemq.command.ActiveMQMessage;
 import org.apache.activemq.command.DataStructure;
 
 /**
+ * <pre>
+ * Class that apply logic to an ActiveMQMessage.
+ * 
+ * The concrete classes have to implement the method processMessage in order to execute the logic, 
+ * this means that this class implements a Template method pattern,
+ * where the logic related to the message processing is delegated to the concrete classes
+ * 
+ * @see <a href="http://en.wikipedia.org/wiki/Template_method_pattern">Template method pattern</a>
+ * 
  * @author Otto Abreu
+ * 
+ * </pre>
  * 
  */
 public abstract class ActiveMQMessageProcessor extends MessageProcessor {
@@ -53,6 +64,8 @@ public abstract class ActiveMQMessageProcessor extends MessageProcessor {
 	    this.processMessage(ds);
 	}
     }
+    
+    
     protected abstract byte getCommandType();
     
     protected abstract void processMessage(DataStructure ds);
