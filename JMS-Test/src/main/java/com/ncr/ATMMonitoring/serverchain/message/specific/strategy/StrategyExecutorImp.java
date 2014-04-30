@@ -1,24 +1,22 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.strategy;
 
-import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ncr.ATMMonitoring.serverchain.MessagePublisher;
 import com.ncr.ATMMonitoring.serverchain.NodeInformation;
 import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
-import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
-
 
 /**
  * Concrete implementation of StrategyExecutor
+ * 
  * @author Otto Abreu
- *
+ * 
  */
 @Component
 public class StrategyExecutorImp implements StrategyExecutor {
@@ -26,11 +24,14 @@ public class StrategyExecutorImp implements StrategyExecutor {
     private static final Logger logger = Logger
 	    .getLogger(StrategyExecutorImp.class);
 
-    @Resource(name = "outgoingMessageProducer")
-    private GenericMessageProducer outgoingProducer;
+    // @Resource(name = "outgoingMessageProducer")
+    // private GenericMessageProducer outgoingProducer;
+    //
+    // @Resource(name = "incomingMessageProducer")
+    // private GenericMessageProducer incomingProducer;
 
-    @Resource(name = "incomingMessageProducer")
-    private GenericMessageProducer incomingProducer;
+    @Autowired
+    private MessagePublisher messagePublisher;
 
     @Autowired
     private NodeInformation nodeInformation;
@@ -129,11 +130,11 @@ public class StrategyExecutorImp implements StrategyExecutor {
 
 	if (message instanceof OutgoingMessage) {
 
-	    this.outgoingProducer.sendMessage(message);
+	    this.messagePublisher.publishOutgoingMessage(message);
 
 	} else if (message instanceof IncomingMessage) {
 
-	    this.incomingProducer.sendMessage(message);
+	    this.messagePublisher.publishIncomingMessage(message);
 	}
 
     }
@@ -165,7 +166,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	IncomingMessage inSwitchedMessage = this
 		.switchMessageTypeFromOutgoingToIncoming(originalOutgoingMessage);
 
-	this.incomingProducer.sendMessage(inSwitchedMessage);
+	this.messagePublisher.publishIncomingMessage(inSwitchedMessage);
     }
 
     private IncomingMessage switchMessageTypeFromOutgoingToIncoming(
@@ -188,7 +189,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	OutgoingMessage outSwitchedMessage = this
 		.switchMessageTypeFromIncomingToOutgoing(originalIncomingMessage);
 
-	this.outgoingProducer.sendMessage(outSwitchedMessage);
+	this.messagePublisher.publishOutgoingMessage(outSwitchedMessage);
     }
 
     private OutgoingMessage switchMessageTypeFromIncomingToOutgoing(

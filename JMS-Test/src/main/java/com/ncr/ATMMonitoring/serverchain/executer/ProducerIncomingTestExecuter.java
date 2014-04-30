@@ -1,29 +1,21 @@
 package com.ncr.ATMMonitoring.serverchain.executer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.ncr.ATMMonitoring.serverchain.MessagePublisher;
 import com.ncr.ATMMonitoring.serverchain.NodeInformation;
 import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateDataResponse;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
-import com.ncr.ATMMonitoring.serverchain.topicactor.producer.GenericMessageProducer;
 
 @Component
 public class ProducerIncomingTestExecuter {
-
-    @Value("${jms.localbroker.url}")
-    private String localUrl;
 
     @Autowired
     private NodeInformation nodeInformation;
 
     @Autowired
-    private GenericMessageProducer incomingMessageProducer;
-
-    // private static final Logger logger = Logger
-    // .getLogger(ProducerTestExecuter.class);
+    private MessagePublisher messagePublisher;
 
     private int count = 0;
 
@@ -31,11 +23,9 @@ public class ProducerIncomingTestExecuter {
     public void runProducer() {
 
 	if (nodeInformation.hasParentNode()) {
-
-	    IncomingMessage incomingMessage = new IncomingMessage(
-		    "Incoming message to send from: " + localUrl, this.count++);
-	    incomingMessage.setSpecificMessage(new UpdateDataResponse());
-	    this.incomingMessageProducer.sendMessage(incomingMessage);
+	    this.messagePublisher.publishIncomingMessage(this.count++,
+		    "Incoming message to send from: " + nodeInformation.getLocalBrokerUrl(),
+		    new UpdateDataResponse());
 	}
     }
 }
