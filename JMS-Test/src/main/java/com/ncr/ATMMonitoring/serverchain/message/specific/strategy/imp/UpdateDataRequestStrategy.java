@@ -111,7 +111,6 @@ public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy 
 
 	    passMessage = BroadcastType.ONE_WAY;
 	}
-	logger.debug("is going to broadcast the message? " + passMessage);
 	
 	return passMessage;
     }

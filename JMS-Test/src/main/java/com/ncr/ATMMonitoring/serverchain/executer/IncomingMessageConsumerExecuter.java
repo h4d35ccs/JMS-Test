@@ -50,9 +50,6 @@ public class IncomingMessageConsumerExecuter {
     @Scheduled(cron = "1 * * * * *")
     public void runIncomingConsumer() {
 
-	NodePosition position = this.nodePosition.getNodePosition();
-	logger.debug("is leaf node?: " + position);
-
 	if (isNotLeaf()) {
 	    try {
 
