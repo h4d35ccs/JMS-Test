@@ -1,11 +1,13 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.incoming;
 
+import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
+
 /**
  * Holds the request for a new Matricula for an ATM
  * @author Otto Abreu
  *
  */
-public class MatriculaRequest {
+public class MatriculaRequest implements SpecificMessage {
     
     
     

@@ -1,6 +1,6 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.outgoing;
 
-import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.StrategyMapper;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp.UpdateDataRequestStrategy;
 

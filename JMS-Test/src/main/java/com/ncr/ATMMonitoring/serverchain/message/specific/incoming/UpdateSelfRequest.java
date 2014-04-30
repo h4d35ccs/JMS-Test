@@ -1,6 +1,6 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.incoming;
 
-import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
 
 /**
  * Holds the information regarding an ATM asking for an update

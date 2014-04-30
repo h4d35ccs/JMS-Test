@@ -1,4 +1,4 @@
-package com.ncr.ATMMonitoring.serverchain.message;
+package com.ncr.ATMMonitoring.serverchain.message.specific;
 
 import java.io.Serializable;
 

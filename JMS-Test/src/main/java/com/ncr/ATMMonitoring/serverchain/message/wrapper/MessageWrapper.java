@@ -3,7 +3,7 @@ package com.ncr.ATMMonitoring.serverchain.message.wrapper;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.VisitableMessageWrapper;
 
 /**

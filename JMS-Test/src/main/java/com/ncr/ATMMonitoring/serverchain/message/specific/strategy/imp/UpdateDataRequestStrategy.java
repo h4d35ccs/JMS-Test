@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.ncr.ATMMonitoring.routertable.RouterTableHandler;
 import com.ncr.ATMMonitoring.serverchain.NodePosition;
-import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.UpdateDataRequest;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy;

@@ -1,7 +1,7 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.strategy;
 
 import com.ncr.ATMMonitoring.serverchain.NodePosition;
-import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
 
 /**
  * <pre>
