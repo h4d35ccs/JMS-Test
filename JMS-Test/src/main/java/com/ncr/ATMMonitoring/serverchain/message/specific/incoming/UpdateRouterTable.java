@@ -4,4 +4,9 @@ import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
 
 public class UpdateRouterTable implements SpecificMessage{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
 }

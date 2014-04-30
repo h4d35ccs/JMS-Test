@@ -11,6 +11,11 @@ import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.MatriculaRequ
 public class MatriculaResponse implements SpecificMessage {
     
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     private int newMatricula;
     
     private MatriculaRequest originalRequest;

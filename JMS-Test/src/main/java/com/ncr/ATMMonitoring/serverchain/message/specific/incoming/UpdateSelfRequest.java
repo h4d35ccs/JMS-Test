@@ -9,6 +9,11 @@ import com.ncr.ATMMonitoring.serverchain.message.SpecificMessage;
  */
 public class UpdateSelfRequest implements SpecificMessage {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     private String atmIp;
 
     private int matricula;
