@@ -28,7 +28,7 @@ public class OutgoingMessageProcessor extends MessageWrapperProcessor implements
     protected void processMessage(MessageWrapper message) {
 	
 	this.setMessageStamp(message);
-	logger.debug("received message in outgoing processor:" + message);
+	logger.info("received message in outgoing processor:" + message);
 	message.accept(this.visitor);
 	
     }

@@ -16,6 +16,13 @@ import com.ncr.ATMMonitoring.serverchain.message.wrapper.visitor.VisitableMessag
  */
 public abstract class MessageWrapper implements Serializable, VisitableMessageWrapper {
 
+    
+    public static final String DEFAULT_OUTGOINGMESSAGE_INNER_MESSAGE="Outgoing message to send from: ";
+    /**
+     * DEFAULT_INCOMINGMESSAGE_INNER_MESSAGE="Incoming message to send from: ";
+
+     */
+    public static final String DEFAULT_INCOMINGMESSAGE_INNER_MESSAGE="Incoming message to send from: ";
     /**
      * 
      */

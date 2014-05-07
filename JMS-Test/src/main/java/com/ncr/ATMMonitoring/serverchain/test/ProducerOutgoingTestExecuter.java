@@ -1,4 +1,4 @@
-package com.ncr.ATMMonitoring.serverchain.executer;
+package com.ncr.ATMMonitoring.serverchain.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.ncr.ATMMonitoring.serverchain.MessagePublisher;
 import com.ncr.ATMMonitoring.serverchain.NodeInformation;
 import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.UpdateDataRequest;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 
 @Component
 public class ProducerOutgoingTestExecuter {
@@ -27,7 +28,7 @@ public class ProducerOutgoingTestExecuter {
 	    UpdateDataRequest udr = new UpdateDataRequest("192.168.1.1", 3);
 
 	    messagePublisher.publishOutgoingMessage(this.count++,
-		    "Outgoing message to send from: " + nodeInformation.getLocalBrokerUrl(), udr);
+		    MessageWrapper.DEFAULT_OUTGOINGMESSAGE_INNER_MESSAGE + nodeInformation.getLocalUrl(), udr);
 
 	}
     }

@@ -42,11 +42,10 @@ public abstract class GenericMessageProducer  extends TopicActor implements Stam
 	    this.sendMessage(producer, messageToSend);
 	    this.closeConnection(connection);
 
-	    logger.debug("message sent: " + message);
+	    logger.info("message sent: " + message);
 	
 	} catch (JMSException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    logger.error("Can not publish the message due an exception: "+e.getMessage(),e);
 	}
 
     }

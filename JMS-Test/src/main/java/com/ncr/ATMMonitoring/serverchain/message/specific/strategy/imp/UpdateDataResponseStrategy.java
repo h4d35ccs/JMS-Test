@@ -1,34 +1,30 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp;
 
-import com.ncr.ATMMonitoring.serverchain.NodePosition;
-import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
+import org.apache.log4j.Logger;
+
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy;
 
 /**
  * @author Otto Abreu
  *
  */
-public class UpdateDataResponseStrategy implements
-	SpecifcMessageProcessStrategy {
+public class UpdateDataResponseStrategy extends
+	BaseStrategy {
 
  
-
-    /* (non-Javadoc)
-     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#setupStrategy(com.ncr.ATMMonitoring.serverchain.NodePosition, com.ncr.ATMMonitoring.serverchain.message.SpecificMessage)
-     */
-    @Override
-    public void setupStrategy(NodePosition postion, SpecificMessage message) {
-	// TODO Auto-generated method stub
-
-    }
+    
+    private static final Logger logger = Logger
+	    .getLogger(UpdateDataResponseStrategy.class);
+    
 
     /* (non-Javadoc)
      * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#canProcessSpecificMessage()
      */
     @Override
     public boolean canProcessSpecificMessage() {
-	// TODO Auto-generated method stub
+	// always true because is going up
+	// each parent should be able to process the message
+	//until it reaches the root node
 	return true;
     }
 
@@ -37,18 +33,36 @@ public class UpdateDataResponseStrategy implements
      */
     @Override
     public void processSpecificMessage() {
-	// TODO Auto-generated method stub
-
+	
+	this.processMessageWhenReachedRoot();
     }
- 
+    
+    
+    private void processMessageWhenReachedRoot(){
+	
+	if (isRoot()) {
+	    logger.debug("Processing message in root: "+this.messageToProcess);
+	}else{
+	    logger.debug("Doing nothing  in middle node: "+this.messageToProcess);
+	}
+    }
+    
+   
     /*
      * (non-Javadoc)
      * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#broadcastDirection()
      */
     @Override
     public BroadcastType broadcastDirection() {
-	// TODO Auto-generated method stub
-	return BroadcastType.ONE_WAY;
+	
+	BroadcastType broadcastDirection = BroadcastType.ONE_WAY;
+	
+	if(isRoot()){
+	   
+	    broadcastDirection = BroadcastType.NONE;
+	}
+	return broadcastDirection;
     }
+    
 
 }

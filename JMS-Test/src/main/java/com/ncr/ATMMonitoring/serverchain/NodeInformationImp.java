@@ -146,9 +146,6 @@ public class NodeInformationImp implements NodeInformation {
 	parentOutgoingTopicUrl = this
 		.generateRemoteBrokerUrl(this.parentOutgoingTopicUrl);
 
-	System.out
-		.println("parentOutgoingTopicUrl-->" + parentOutgoingTopicUrl);
-
 	return parentOutgoingTopicUrl;
     }
     
@@ -198,6 +195,21 @@ public class NodeInformationImp implements NodeInformation {
 	    completeRemoteUrl = ip;
 	}
 	return completeRemoteUrl;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.NodeInformation#getLocalUrl()
+     */
+    @Override
+    public String getLocalUrl() {
+	String localUrl ="";
+	if(StringUtils.isNotEmpty(this.localBrokerUrl)){
+	    String[] protocolAndUrl = this.localBrokerUrl.split("://");
+	    localUrl = protocolAndUrl[1];
+	}
+	return localUrl;
+		
     }
 
 }

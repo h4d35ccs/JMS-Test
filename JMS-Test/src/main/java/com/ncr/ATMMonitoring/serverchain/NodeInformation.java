@@ -43,10 +43,15 @@ public interface NodeInformation {
      */
     String getParentOutgoingTopicUrl();
     /**
-     * Gets the template from the property and puts the given ip to generate a valid remote url
+     * Gets the template from the property and puts the given ip to generate a valid JMS url
      * @param ip String 
      * @return String
      */
     String generateRemoteBrokerUrl(String ip);
+    /**
+     * Returns the local URL without the protocol
+     * @return String
+     */
+    String getLocalUrl();
 
 }

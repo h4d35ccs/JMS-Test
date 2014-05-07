@@ -36,7 +36,7 @@ public  class OutgoingMessageConsumer extends TopicConsumer {
 
     @Override
     protected String getTopicName() {
-	// TODO Auto-generated method stub
+	
 	return this.getOutgoingTopicName();
     }
 

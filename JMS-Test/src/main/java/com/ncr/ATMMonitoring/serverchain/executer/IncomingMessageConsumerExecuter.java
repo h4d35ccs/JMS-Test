@@ -160,11 +160,11 @@ public class IncomingMessageConsumerExecuter {
 
 	if (!this.destinationsAndConsumerInstance.containsKey(childBrokerIp)) {
 
-	    this.getTopicConsumerFromSpringContextAndPutItInMap(childBrokerIp);
+	    topicConsumer = this.getTopicConsumerFromSpringContextAndPutItInMap(childBrokerIp);
 
 	} else {
 	    
-	    this.getTopicConsumerFromMap(childBrokerIp);
+	    topicConsumer = this.getTopicConsumerFromMap(childBrokerIp);
 	}
 
 	return topicConsumer;
@@ -183,8 +183,11 @@ public class IncomingMessageConsumerExecuter {
     
     private TopicConsumer getTopicConsumerFromMap(String childBrokerIp){
 	logger.debug("TopicConsumer from map");
-	   return this.destinationsAndConsumerInstance
+	
+	TopicConsumer consumer = this.destinationsAndConsumerInstance
 		    .get(childBrokerIp);
+
+	   return consumer;
     }
 
 }

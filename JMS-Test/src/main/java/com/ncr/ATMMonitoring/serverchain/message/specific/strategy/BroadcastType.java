@@ -43,6 +43,20 @@ public enum BroadcastType {
 
 	    return "TWO WAY";
 	}
+
+	
+    },
+    /**
+     * Means that the message will turn to the other way, if it was a incoming, will go back as outgoing and viceversa
+     */
+    TURN_BACK{
+
+	@Override
+	public String toString() {
+	   
+	    return "TURN_BACK";
+	}
+	    
     };
 
     public abstract String toString();

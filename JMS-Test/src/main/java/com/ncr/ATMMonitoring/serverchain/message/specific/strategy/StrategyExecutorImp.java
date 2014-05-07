@@ -2,11 +2,10 @@ package com.ncr.ATMMonitoring.serverchain.message.specific.strategy;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.MessagePublisher;
-import com.ncr.ATMMonitoring.serverchain.NodeInformation;
-import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
@@ -24,17 +23,11 @@ public class StrategyExecutorImp implements StrategyExecutor {
     private static final Logger logger = Logger
 	    .getLogger(StrategyExecutorImp.class);
 
-    // @Resource(name = "outgoingMessageProducer")
-    // private GenericMessageProducer outgoingProducer;
-    //
-    // @Resource(name = "incomingMessageProducer")
-    // private GenericMessageProducer incomingProducer;
-
     @Autowired
     private MessagePublisher messagePublisher;
 
     @Autowired
-    private NodeInformation nodeInformation;
+    private ApplicationContext springContext;
 
     private SpecifcMessageProcessStrategy strategyToAply;
 
@@ -62,21 +55,20 @@ public class StrategyExecutorImp implements StrategyExecutor {
     private void strategyExecutorSetup(MessageWrapper message) {
 
 	SpecificMessage specificMessage = message.getSpecificMessage();
-	NodePosition nodePosition = this.nodeInformation.getNodePosition();
 
 	this.messageWrapper = message;
 
-	this.setupStrategyToUse(specificMessage, nodePosition);
+	this.setupStrategyToUse(specificMessage);
 
     }
 
-    private void setupStrategyToUse(SpecificMessage specificMessage,
-	    NodePosition nodePosition) {
+    private void setupStrategyToUse(SpecificMessage specificMessage) {
 
 	this.strategyToAply = StrategyFactory
 		.getStrategyForSpecificMessage(specificMessage);
 
-	this.strategyToAply.setupStrategy(nodePosition, specificMessage);
+	this.strategyToAply
+		.setupStrategy(specificMessage, this.springContext);
 
     }
 
@@ -88,7 +80,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
     }
 
     private void broadcastMessage(MessageWrapper message) {
-	logger.debug("is going to broadcast message : "
+	logger.info("is going to broadcast message : "
 		+ strategyToAply.broadcastDirection());
 
 	if (isBroadcastOneWay()) {
@@ -98,25 +90,16 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	} else if (isBroadcastTwoWay()) {
 
 	    this.broadcastMessageTwoWay(message);
+
+	} else if (isBroadcastTurnBack()) {
+	    
+	    this.bradcastTurnBack();
 	}
     }
 
     private boolean isBroadcastOneWay() {
 
 	if (strategyToAply.broadcastDirection().equals(BroadcastType.ONE_WAY)) {
-
-	    return true;
-
-	} else {
-
-	    return false;
-	}
-    }
-
-    private boolean isBroadcastTwoWay() {
-
-	if (this.strategyToAply.broadcastDirection().equals(
-		BroadcastType.TWO_WAY)) {
 
 	    return true;
 
@@ -137,6 +120,19 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	    this.messagePublisher.publishIncomingMessage(message);
 	}
 
+    }
+
+    private boolean isBroadcastTwoWay() {
+
+	if (this.strategyToAply.broadcastDirection().equals(
+		BroadcastType.TWO_WAY)) {
+
+	    return true;
+
+	} else {
+
+	    return false;
+	}
     }
 
     private void broadcastMessageTwoWay(MessageWrapper message) {
@@ -169,6 +165,21 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	this.messagePublisher.publishIncomingMessage(inSwitchedMessage);
     }
 
+    private boolean isBroadcastTurnBack() {
+
+	if (this.strategyToAply.broadcastDirection().equals(
+		BroadcastType.TURN_BACK)) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+    
+    private void bradcastTurnBack(){
+	MessageWrapper wrapper = this.strategyToAply.getTurnBackMessage();
+	this.broadcastMessageOneWay(wrapper);
+    }
+
     private IncomingMessage switchMessageTypeFromOutgoingToIncoming(
 	    OutgoingMessage message) {
 
@@ -177,7 +188,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	SpecificMessage originalSpecificMessage = message.getSpecificMessage();
 
 	IncomingMessage incomingMessage = new IncomingMessage(
-		originalOutgoingMessage, originalOutgoingId);
+		"switched to incoming "+originalOutgoingMessage, originalOutgoingId);
 	incomingMessage.setSpecificMessage(originalSpecificMessage);
 
 	return incomingMessage;
@@ -200,7 +211,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	SpecificMessage originalSpecificMessage = message.getSpecificMessage();
 
 	OutgoingMessage outmessage = new OutgoingMessage(
-		originalIncomingMessage, originalIncomingId);
+		"switched to outgoing "+originalIncomingMessage, originalIncomingId);
 	outmessage.setSpecificMessage(originalSpecificMessage);
 
 	return outmessage;

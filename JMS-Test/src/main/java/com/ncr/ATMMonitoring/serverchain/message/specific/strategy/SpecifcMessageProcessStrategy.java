@@ -1,7 +1,9 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.strategy;
 
-import com.ncr.ATMMonitoring.serverchain.NodePosition;
+import org.springframework.context.ApplicationContext;
+
 import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * <pre>
@@ -17,10 +19,11 @@ public interface SpecifcMessageProcessStrategy {
     
     /**
      * Sets the objects needed to execute a strategy
-     * @param postion NodePosition that indicate the actual position of the node
      * @param message SpecificMessage Message to analyze
+     * @param ApplicationContext spring context for initialize spring beans
+
      */
-    void setupStrategy(NodePosition postion, SpecificMessage message);
+    void setupStrategy( SpecificMessage message, ApplicationContext springContext);
     
     /**
      * True if this node should process the message
@@ -56,5 +59,18 @@ public interface SpecifcMessageProcessStrategy {
      **/
     BroadcastType broadcastDirection();
     
+    /**
+     * <pre>
+     * When the strategy determined that the message should go back, this method return the new message to send.
+     * 
+     * * If the original message was Outgoing this method will construct a new Incoming message
+     * * If the original message was Incoming this method will construct a new Outgoing message
+     * 
+     * ONLY Return null if not implemented!
+     * 
+     * </pre>
+     * @return MessageWrapper
+     */
+    MessageWrapper getTurnBackMessage();
 
 }

@@ -1,13 +1,17 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.routertable.RouterTableHandler;
 import com.ncr.ATMMonitoring.serverchain.NodePosition;
-import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
+import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateDataResponse;
 import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.UpdateDataRequest;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
+import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * <pre>
@@ -20,13 +24,13 @@ import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessag
  * </pre>
  * 
  */
-public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy {
+@Component
+public class UpdateDataRequestStrategy extends BaseStrategy {
 
     private static final Logger logger = Logger
 	    .getLogger(UpdateDataRequestStrategy.class);
 
-    private NodePosition nodePosition;
-    private SpecificMessage messageToProcess;
+    private IncomingMessage turnedBackMessage;
 
     private boolean finalProcessing = false;
 
@@ -38,12 +42,7 @@ public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy 
      * #setupStrategy(com.ncr.ATMMonitoring.serverchain.NodePosition,
      * com.ncr.ATMMonitoring.serverchain.message.SpecificMessage)
      */
-    @Override
-    public void setupStrategy(NodePosition postion, SpecificMessage message) {
-	this.nodePosition = postion;
-	this.messageToProcess = message;
-
-    }
+   
 
     /*
      * (non-Javadoc)
@@ -69,18 +68,30 @@ public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy 
     private boolean nodeIsLeafOrMiddleAndMatriculaIsPresent(
 	    UpdateDataRequest updateDataMessage) {
 
-	boolean matriculaPresentInTable = RouterTableHandler
-		.matriculaIsInRouterTable(updateDataMessage.getMatricula());
+	boolean matriculaPresentInTable = this
+		.matriculaPresentInTable(updateDataMessage);
 
-	if ((this.nodePosition.equals(NodePosition.LEAF_NODE) || this.nodePosition
-		.equals(NodePosition.MIDDLE_NODE)) && matriculaPresentInTable) {
-	   
+	if ((this.getCurrentNodePosition().equals(NodePosition.LEAF_NODE) || this
+		.getCurrentNodePosition().equals(NodePosition.MIDDLE_NODE))
+		&& matriculaPresentInTable) {
+
 	    return true;
 
 	} else {
 
 	    return false;
 	}
+    }
+
+    private NodePosition getCurrentNodePosition() {
+	return this.nodeInformation.getNodePosition();
+    }
+
+    private boolean matriculaPresentInTable(UpdateDataRequest updateDataMessage) {
+	logger.debug(RouterTableHandler.tableTotring());
+	boolean matriculaPresentInTable = RouterTableHandler
+		.matriculaIsInRouterTable(updateDataMessage.getMatricula());
+	return matriculaPresentInTable;
     }
 
     /*
@@ -96,6 +107,35 @@ public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy 
 
     }
 
+    private void processMessageByPosition() {
+
+	if (isLeaf()) {
+	    logger.info(" Update data Request reached leaf, processing....");
+	    this.processWhenLeaf();
+
+	}
+    }
+    
+
+    private void processWhenLeaf() {
+
+	this.finalProcessing = true;
+
+	this.instanciateTurnedBackMessage();
+	logger.info(" Update data Request processed in leaf");
+    }
+
+    private void instanciateTurnedBackMessage() {
+	UpdateDataResponse udr = new UpdateDataResponse();
+	udr.setOriginalRequest((UpdateDataRequest) this.messageToProcess);
+	
+	this.turnedBackMessage = new IncomingMessage("Message incoming from: "
+		+ this.nodeInformation.getLocalBrokerUrl(),
+		(int) new Date().getTime());
+	
+	this.turnedBackMessage.setSpecificMessage(udr);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -104,30 +144,35 @@ public class UpdateDataRequestStrategy implements SpecifcMessageProcessStrategy 
      */
     @Override
     public BroadcastType broadcastDirection() {
-	
+
 	BroadcastType passMessage = BroadcastType.NONE;
 
-	if (!this.finalProcessing && canProcessSpecificMessage()) {
+	if (isMiddleNodeAndCanPassMessage()) {
 
 	    passMessage = BroadcastType.ONE_WAY;
+	    
+	}else if (isLeaf()) {
+	    
+	    passMessage = BroadcastType.TURN_BACK;
 	}
-	
+
 	return passMessage;
     }
-
-    private void processMessageByPosition() {
-
-	if (this.nodePosition.equals(NodePosition.LEAF_NODE)) {
-	    logger.debug("reached leaf");
-	    this.processWhenLeaf();
-
+    
+    private boolean isMiddleNodeAndCanPassMessage(){
+	
+	if(!this.finalProcessing && canProcessSpecificMessage()){
+	    return true;
+	    
+	}else{
+	    
+	    return false;
 	}
     }
 
-    private void processWhenLeaf() {
-
-	this.finalProcessing = true;
-	logger.debug("Processing in leaf:" + this.messageToProcess);
+    @Override
+    public MessageWrapper getTurnBackMessage() {
+	return this.turnedBackMessage;
     }
 
 }

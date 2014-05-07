@@ -14,6 +14,18 @@ import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp.UpdateDat
 public class UpdateDataResponse implements SpecificMessage{
 
  
+    public UpdateDataResponse(UpdateDataRequest originalRequest,
+	    String jsonMessage) {
+	super();
+	this.originalRequest = originalRequest;
+	this.jsonMessage = jsonMessage;
+    }
+    
+
+    public UpdateDataResponse() {
+	super();
+    }
+
     private static final long serialVersionUID = 1L;
 
     private UpdateDataRequest originalRequest;
@@ -36,5 +48,16 @@ public class UpdateDataResponse implements SpecificMessage{
     public int getMatricula() {
         return originalRequest.getMatricula();
     }
+
+
+    public void setOriginalRequest(UpdateDataRequest originalRequest) {
+        this.originalRequest = originalRequest;
+    }
+
+
+    public void setJsonMessage(String jsonMessage) {
+        this.jsonMessage = jsonMessage;
+    }
+    
     
 }

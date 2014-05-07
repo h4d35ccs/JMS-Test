@@ -17,8 +17,14 @@ public class OutgoingMessage extends MessageWrapper {
 
     private static final long serialVersionUID = 1L;
 
+    
     public OutgoingMessage(String message, int id) {
 	super(message, id);
+
+    }
+    
+    public OutgoingMessage(int id) {
+   	super(DEFAULT_OUTGOINGMESSAGE_INNER_MESSAGE, id);
 
     }
     

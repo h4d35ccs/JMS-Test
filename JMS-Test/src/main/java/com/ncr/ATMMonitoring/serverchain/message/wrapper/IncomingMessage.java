@@ -20,11 +20,17 @@ public class IncomingMessage extends MessageWrapper {
 
  
     private static final long serialVersionUID = -6457607990812054891L;
+    
 
     public IncomingMessage(String message, int id) {
 	super(message, id);
 
     }
+    
+    public IncomingMessage(int id) {
+   	super(DEFAULT_INCOMINGMESSAGE_INNER_MESSAGE, id);
+
+       }
 
     @Override
     public void accept(WrapperVisitor visitor) {
