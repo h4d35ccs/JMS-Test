@@ -7,7 +7,9 @@ import javax.jms.Session;
 import javax.jms.Topic;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ConnectionClosedException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +41,10 @@ public abstract class TopicActor {
 
     protected String externalBrokerUrl;
 
-
+    private static final Logger logger = Logger
+	    .getLogger(TopicActor.class);
+    
+    
     protected ConnectionFactory getConnectionFactory(String clientId,
 	    int brokerType) {
 
@@ -124,7 +129,12 @@ public abstract class TopicActor {
     }
 
     protected void closeConnection(Connection con) throws JMSException {
-	con.close();
+	
+	try {
+	    con.close();
+	} catch (ConnectionClosedException e) {
+	    logger.warn("can not close the connection because was already closed");
+	}
     }
 
     protected String getClientId(String clientBaseId) {
