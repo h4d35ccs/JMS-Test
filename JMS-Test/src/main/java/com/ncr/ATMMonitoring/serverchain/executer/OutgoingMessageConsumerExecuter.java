@@ -27,9 +27,8 @@ public class OutgoingMessageConsumerExecuter {
     private static final Logger logger = Logger
 	    .getLogger(OutgoingMessageConsumerExecuter.class);
 
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(fixedDelay = 1000)
     public void runConsumer() {
-	logger.debug("cheching");
 
 	boolean hasParentAndShouldLaunchConsumer = this.nodePosition
 		.hasParentNode();

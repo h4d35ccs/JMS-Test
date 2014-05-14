@@ -47,7 +47,7 @@ public class IncomingMessageConsumerExecuter {
     /**
      * checks for a new message in the incoming topic
      */
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(fixedDelay = 3000)
     public void runIncomingConsumer() {
 
 	if (isNotLeaf()) {

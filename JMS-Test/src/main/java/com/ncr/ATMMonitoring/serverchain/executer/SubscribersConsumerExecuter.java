@@ -26,7 +26,7 @@ public class SubscribersConsumerExecuter {
     private static final Logger logger = Logger
 	    .getLogger(SubscribersConsumerExecuter.class);
 
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(fixedDelay = 3000)
     public void checkConsumers() throws Exception {
 	logger.debug("checking the subscriber topic ");
 	this.consumer.setup();
