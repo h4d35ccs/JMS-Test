@@ -13,8 +13,30 @@ import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
 import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
 
 /**
- * @author Otto Abreu
+ * <pre>
+ * Strategy that process a UpdateRouterTable message.
  * 
+ * The strategy handle tree different message status which are:
+ * 	*UPDATE: means that if the value is present in the router table, will be updated, if not
+ * 		will be added
+ * 	*REMOVE_ONLY: if the value is present in the router table, will be deleted
+ * 	*FORCE_UPDATE_FROM_ROOT: no mater what, will perform an UPDATE
+ * 
+ * This strategy only can process the message if 
+ * 	*the given matricula is present and the final processing node reflected in the router table is not the same.
+ * 	this means that is one parent node that hold the information of the leaf below, and if is a leaf, was the previous one in charge
+ * 
+ * 	* The matricula is not present, but is an update, 
+ * 		this means that the client has bean added to a leaf in this branch and will be be added.
+ * 
+ * When a middle node is reached, the broadcast is BroadcastType.TWO_WAY, because it is necessary 
+ * to notify all child branches and the parent that a change is occurring.
+ * 
+ * When the root is reached, the broadcast changes to BroadcastType.TURN_BACK, because it is necessary to notify all branches in case 
+ * the client was in another branch and have to be removed. For that last reason the original message changes from UPDATE to REMOVE_ONLY
+ *
+ * @author Otto Abreu
+ * <pre>
  */
 public class UpdateRouterTableStrategy extends BaseStrategy {
 
@@ -279,8 +301,7 @@ public class UpdateRouterTableStrategy extends BaseStrategy {
 
 	    broadcast = BroadcastType.ONE_WAY;
 
-	} else if (this.isMiddle() && this.isRemoveOnly()
-		& this.canProcessSpecificMessage()) {
+	} else if (this.isMiddle() && this.isRemoveOnly()){
 
 	    broadcast = BroadcastType.ONE_WAY;
 	}
