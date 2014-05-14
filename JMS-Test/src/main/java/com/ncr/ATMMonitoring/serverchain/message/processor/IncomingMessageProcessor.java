@@ -30,7 +30,7 @@ public class IncomingMessageProcessor extends MessageWrapperProcessor implements
     @Override
     protected void processMessage(MessageWrapper message) {
 	this.setMessageStamp(message);
-	logger.debug("received message in Incoming processor:" + message);
+	logger.info("received message in Incoming processor:" + message);
 	message.accept(this.visitor);
 
     }
