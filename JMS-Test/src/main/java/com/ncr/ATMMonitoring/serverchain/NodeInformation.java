@@ -53,5 +53,11 @@ public interface NodeInformation {
      * @return String
      */
     String getLocalUrl();
+    
+    /**
+     * Returns the parent url without protocol
+     * @return
+     */
+    String getParentUrl();
 
 }

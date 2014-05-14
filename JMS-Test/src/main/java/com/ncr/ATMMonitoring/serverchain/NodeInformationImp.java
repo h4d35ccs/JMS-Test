@@ -211,5 +211,14 @@ public class NodeInformationImp implements NodeInformation {
 	return localUrl;
 		
     }
+    
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.ATMMonitoring.serverchain.NodeInformation#getParentUrl()
+     */
+    @Override
+    public String getParentUrl(){
+	return this.parentOutgoingTopicUrl;
+    }
 
 }
