@@ -20,7 +20,7 @@ public class ProducerOutgoingTestExecuter {
 
     private int count = 0;
 
-    @Scheduled(cron = "3 * * * * *")
+    @Scheduled(fixedDelay = 40000)
     public void runProducer() {
 
 	if (!nodeInformation.hasParentNode()) {

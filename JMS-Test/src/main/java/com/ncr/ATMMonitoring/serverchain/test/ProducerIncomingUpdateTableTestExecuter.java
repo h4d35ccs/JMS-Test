@@ -21,7 +21,7 @@ public class ProducerIncomingUpdateTableTestExecuter {
 
     private int count = 0;
 
-   @Scheduled(cron = "5 * * * * *")
+    @Scheduled(fixedDelay = 5000)
     public void runProducer() {
 	String localUrl = nodeInformation.getLocalBrokerUrl();
 	
