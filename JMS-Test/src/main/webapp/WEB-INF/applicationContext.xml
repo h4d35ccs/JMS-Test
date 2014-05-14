@@ -69,7 +69,7 @@
      <bean id="brokerOutcoming" class="org.apache.activemq.broker.BrokerService"
 		init-method="start" destroy-method="stop">
 		<property name="brokerName" value="outgoingBroker" />
-		<property name="persistent" value="true" />
+		<property name="persistent" value="false" />
 		<property name="transportConnectorURIs">
 			<list>
 				<value>tcp://153.57.97.112:61617</value>
@@ -80,7 +80,7 @@
 	 <bean id="brokerIncoming" class="org.apache.activemq.broker.BrokerService"
 		init-method="start" destroy-method="stop">
 		<property name="brokerName" value="incomingBroker" />
-		<property name="persistent" value="true" />
+		<property name="persistent" value="false" />
 		<property name="transportConnectorURIs">
 			<list>
 				<value></value>
