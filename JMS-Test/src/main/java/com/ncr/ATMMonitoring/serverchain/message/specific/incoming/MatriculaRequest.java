@@ -11,6 +11,11 @@ public class MatriculaRequest implements SpecificMessage {
     
     
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     private String requestedFromURL;
     
     private String atmIptoSetMatricula;
