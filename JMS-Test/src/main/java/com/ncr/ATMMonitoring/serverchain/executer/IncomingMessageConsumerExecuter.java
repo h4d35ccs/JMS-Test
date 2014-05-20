@@ -56,8 +56,8 @@ public class IncomingMessageConsumerExecuter {
 		Set<String> childrenBrokerIp = this.childrenLinkListHandler
 			.getChildrenSubscribed();
 
-		logger.debug("is not leaf, is going to subscribe to remote children "
-			+ childrenBrokerIp);
+//		logger.debug("is not leaf, is going to subscribe to remote children "
+//			+ childrenBrokerIp);
 
 		this.consumeMessagesFromChildren(childrenBrokerIp);
 
@@ -73,9 +73,9 @@ public class IncomingMessageConsumerExecuter {
 
     private boolean isNotLeaf() {
 	NodePosition position = this.nodePosition.getNodePosition();
-	logger.debug("is leaf node?: " + position);
-
+	
 	if (!(position.equals(NodePosition.LEAF_NODE))) {
+	   
 	    return true;
 
 	} else {
@@ -114,7 +114,7 @@ public class IncomingMessageConsumerExecuter {
 	    this.disconectAllConsumers();
 
 	} else {
-	    logger.error(e.getMessage(), e);
+	    logger.error("error disconecting all the consumers: "+e.getMessage(), e);
 	}
     }
 
@@ -139,7 +139,7 @@ public class IncomingMessageConsumerExecuter {
     }
     
     private void consumeMessage(String completeBrokerURL,IncomingMessageConsumer incomingConsumer ) throws JMSException{
-	logger.debug("remote child to consume from: " + completeBrokerURL);
+	
 	incomingConsumer.setup(completeBrokerURL);
 	incomingConsumer.consumeMessage();
     }
@@ -172,7 +172,7 @@ public class IncomingMessageConsumerExecuter {
 
     private TopicConsumer getTopicConsumerFromSpringContextAndPutItInMap(String childBrokerIp) {
 
-	logger.debug("TopicConsumer from spring context");
+	
 	TopicConsumer topicConsumer = this.springContext
 		.getBean(IncomingMessageConsumer.class);
 	this.destinationsAndConsumerInstance.put(childBrokerIp, topicConsumer);
@@ -182,7 +182,7 @@ public class IncomingMessageConsumerExecuter {
     }
     
     private TopicConsumer getTopicConsumerFromMap(String childBrokerIp){
-	logger.debug("TopicConsumer from map");
+	
 	
 	TopicConsumer consumer = this.destinationsAndConsumerInstance
 		    .get(childBrokerIp);
