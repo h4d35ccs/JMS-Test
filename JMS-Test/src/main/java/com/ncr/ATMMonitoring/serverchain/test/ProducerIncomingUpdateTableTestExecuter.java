@@ -1,5 +1,6 @@
 package com.ncr.ATMMonitoring.serverchain.test;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,20 +19,25 @@ public class ProducerIncomingUpdateTableTestExecuter {
     private MessagePublisher messagePublisher;
     
     private static final String URL_PORT_TO_TEST="61622";
+    
+
+    private static final Logger logger = Logger
+	    .getLogger(ProducerIncomingUpdateTableTestExecuter.class);
 
     private int count = 0;
 
-    @Scheduled(fixedDelay = 5000)
+//    @Scheduled(cron="*/20 * * * * ?")
     public void runProducer() {
 	String localUrl = nodeInformation.getLocalBrokerUrl();
-	
-	if (localUrl.contains(URL_PORT_TO_TEST) && this.count < 3) {
-	    System.out.println("Is going to update table ");
+	logger.debug(" cont change from local leaf (2<x<5):"+this.count);
+	if (localUrl.contains(URL_PORT_TO_TEST) && (this.count > 2 && this.count < 5)) {
+	    logger.debug("Is going to update table "+URL_PORT_TO_TEST);
 	    UpdateRouterTable updateInfo = new UpdateRouterTable(3, this.nodeInformation.getLocalUrl());
-	    this.messagePublisher.publishIncomingMessage(this.count++,
+	    this.messagePublisher.publishIncomingMessage(this.count,
 		    "Incoming message to update table send from: " + nodeInformation.getLocalBrokerUrl(),
 		    updateInfo );
 	}
+	this.count++;
     }
     
 }

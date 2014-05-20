@@ -30,7 +30,6 @@ public class NetworkMappingTest {
 	
 	if(nodePosition.getNodePosition().equals(NodePosition.FIRST_NODE)){ 
         	logger.info("networkMap: "+this.networkMapHandler.getNetworkMap().toString());
-        	 logger.info("networkMap json: "+this.networkMapHandler.getNetworkMap().toJSON());
 	}
     }
 
