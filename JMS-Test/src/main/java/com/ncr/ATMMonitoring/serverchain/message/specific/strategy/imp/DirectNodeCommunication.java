@@ -1,5 +1,7 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp;
 
+import org.apache.log4j.Logger;
+
 import com.ncr.ATMMonitoring.serverchain.message.specific.DirectCommunicationMessage;
 
 /**
@@ -12,22 +14,9 @@ import com.ncr.ATMMonitoring.serverchain.message.specific.DirectCommunicationMes
  */
 public abstract class DirectNodeCommunication extends BaseStrategy {
 
-    /* (non-Javadoc)
-     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#canProcessSpecificMessage()
-     */
-    @Override
-    public boolean canProcessSpecificMessage() {
-	
-	if (messageWasAddressedToThisNode()){
-	   
-	    return true;
-	    
-	}else{
-	    
-	    return true; 
-	}
-	
-    }
+    
+    private static final Logger logger = Logger
+	    .getLogger(DirectNodeCommunication.class);
 
     /**
      * Indicate if the message was addressed to the current node
@@ -37,6 +26,7 @@ public abstract class DirectNodeCommunication extends BaseStrategy {
 	
 	String actualNode = this.nodeInformation.getLocalUrl();
 	String nodeToComunicatewith = this.getDirectNodeComunication().getComunicateToNode();
+	logger.debug("Current node: "+actualNode+" destination node: "+nodeToComunicatewith);
 	
 	if(actualNode.equals(nodeToComunicatewith)){
 	  
