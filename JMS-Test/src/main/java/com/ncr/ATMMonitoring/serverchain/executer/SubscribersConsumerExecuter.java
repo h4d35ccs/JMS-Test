@@ -4,6 +4,7 @@
 package com.ncr.ATMMonitoring.serverchain.executer;
 
 import javax.annotation.Resource;
+import javax.jms.JMSException;
 
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,15 +22,19 @@ public class SubscribersConsumerExecuter {
 
     @Resource(name="subscribersTopicConsumer")
     private TopicConsumer consumer;
-    
-
+   
     private static final Logger logger = Logger
 	    .getLogger(SubscribersConsumerExecuter.class);
 
     @Scheduled(fixedDelay = 3000)
-    public void checkConsumers() throws Exception {
-	logger.debug("checking the subscriber topic ");
-	this.consumer.setup();
-	this.consumer.consumeMessage();
+    public void checkConsumers()  {
+
+	try {
+	    this.consumer.setup();
+	    this.consumer.consumeMessage();
+	} catch (JMSException e) {
+	    logger.error("error while consuming messages: "+e.getMessage(),e);
+	}
+	
     }
 }
