@@ -62,7 +62,7 @@ public class NetworkMappingRequestStrategy extends BaseStrategy {
 	 String nodeUrlAndPort =  this.nodeInformation.getLocalUrl();
 	 String parentUrl = this.nodeInformation.getParentUrl();
 	 String routerTable = null;
-	 routerTable =RouterTableHandler.tableTotring();
+	 routerTable = RouterTableHandler.tableTotring();
 	 this.response.addNodeInformationLeaforMiddle(nodeUrlAndPort, routerTable, parentUrl);
     }
 
