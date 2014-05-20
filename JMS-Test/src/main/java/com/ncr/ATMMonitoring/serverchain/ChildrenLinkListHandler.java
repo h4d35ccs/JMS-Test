@@ -6,7 +6,6 @@ package com.ncr.ATMMonitoring.serverchain;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
@@ -29,9 +28,7 @@ import com.ncr.ATMMonitoring.serverchain.topicactor.TopicActor;
 @Component
 public class ChildrenLinkListHandler {
 
-    private static final Logger logger = Logger
-	    .getLogger(ChildrenLinkListHandler.class);
-
+   
     private Set<String> childrenSubscribed = new HashSet<String>();
 
     /**
@@ -47,8 +44,6 @@ public class ChildrenLinkListHandler {
 	if (this.childrenSubscribed.contains(childIpandPort)) {
 	    childSubscribed = true;
 	}
-
-	logger.debug("is " + childIpandPort + " subscribed? " + childSubscribed);
 
 	return childSubscribed;
     }

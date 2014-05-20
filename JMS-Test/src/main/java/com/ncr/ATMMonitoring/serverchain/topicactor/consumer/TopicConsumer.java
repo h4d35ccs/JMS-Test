@@ -95,7 +95,6 @@ public abstract class TopicConsumer extends TopicActor {
 	ConnectionFactory connectionFactory = this.createConnectionFactory(this
 		.getBrokerType());
 
-	logger.debug("creating consumer connection");
 
 	Connection connection = this
 		.getAndStartJMSConnection(connectionFactory);
