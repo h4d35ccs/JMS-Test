@@ -8,37 +8,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
  * Class that generate all the network graph
- * @author Otto Abreu 
+ * 
+ * @author Otto Abreu
  */
 @Component
 public class NetworkMapHandler {
 
     private Map<String, NetworkNode> networkNodes = new HashMap<String, NetworkNode>();
     private Map<String, Set<String>> nodesAndChildrens = new HashMap<String, Set<String>>();
-   
+
     private NetworkMap networkMap;
     private String rootUrlAndPort;
 
-    private static final Logger logger = Logger
-	    .getLogger(NetworkMapHandler.class);
 
     /**
      * <pre>
      * Update the current information of the network.
      * 
      * From the given list of NodeSpecificInformation, updates or creates the current network
+     * 
      * <pre>
      * @param nodesInfos
      */
     public synchronized void updateNetworkMap(
 	    List<NodeSpecificInformation> nodesInfos) {
-
-	logger.debug("Map new Info size: " + nodesInfos.size());
 
 	for (NodeSpecificInformation nodeInfo : nodesInfos) {
 
@@ -51,7 +48,7 @@ public class NetworkMapHandler {
 	    }
 	}
 
-	logger.debug("Map Updated");
+	
     }
 
     private void addIfNotInMap(NodeSpecificInformation nodesInfo) {
@@ -68,7 +65,7 @@ public class NetworkMapHandler {
     }
 
     private NetworkNode createNetworkNode(NodeSpecificInformation nodesInfo) {
-	logger.debug("Creating node :" + nodesInfo.getNodeUrlAndPort());
+	
 	NetworkNode newNode = new NetworkNode();
 	newNode.setNodeUrlAndPort(nodesInfo.getNodeUrlAndPort());
 	newNode.setRouterTable(nodesInfo.getRouterTable());
@@ -191,19 +188,20 @@ public class NetworkMapHandler {
 
     /**
      * Generates the current Network graph using the object NetworkMap
+     * 
      * @return NetworkMap
      */
     public NetworkMap getNetworkMap() {
 
 	this.addChildLink();
 	NetworkNode rootNode = this.getRootFromMap();
-	
-	if(rootNode != null){
-	    
+
+	if (rootNode != null) {
+
 	    rootNode.setLastcomunicationAt(NetworkNode.ROOT_COMUNICATION_DEFAULT_VALUE);
 	}
 	this.networkMap = new NetworkMap(rootNode);
-	logger.debug("Map generated");
+
 	return networkMap;
     }
 
