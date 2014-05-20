@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ncr.ATMMonitoring.serverchain.message.processor;
 
 import org.apache.activemq.command.CommandTypes;
@@ -65,7 +62,7 @@ public class ChildrenSubscribersMessageProccessor extends
 
     @Override
     protected byte getCommandType() {
-	// TODO Auto-generated method stub
+	
 	return CommandTypes.CONNECTION_INFO;
     }
 
