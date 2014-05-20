@@ -39,7 +39,7 @@ public class OutgoingMessageConsumerExecuter {
 		this.consumeMessage();
 		 
 	    } catch (JMSException e) {
-		logger.error(e.getMessage(),e);
+		logger.error("error while consuming message: "+e.getMessage(),e);
 	    }
 
 	}
