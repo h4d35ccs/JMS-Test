@@ -1,4 +1,4 @@
-package com.ncr.serverchain.message.specific.outgoing;
+package com.ncr.ATMMonitoring.serverchain.message.specific.outgoing;
 
 import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.MatriculaRequest;
 import com.ncr.serverchain.message.specific.SpecificMessage;
