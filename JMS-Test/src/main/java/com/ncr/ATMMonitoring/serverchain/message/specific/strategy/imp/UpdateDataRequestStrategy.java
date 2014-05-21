@@ -6,12 +6,13 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.ncr.ATMMonitoring.routertable.RouterTableHandler;
-import com.ncr.ATMMonitoring.serverchain.NodePosition;
 import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateDataResponse;
-import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.UpdateDataRequest;
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
+import com.ncr.serverchain.NodePosition;
+import com.ncr.serverchain.message.specific.outgoing.UpdateDataRequest;
+import com.ncr.serverchain.message.specific.strategy.BroadcastType;
+import com.ncr.serverchain.message.specific.strategy.imp.BaseStrategy;
+import com.ncr.serverchain.message.wrapper.IncomingMessage;
+import com.ncr.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * <pre>

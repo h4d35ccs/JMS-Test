@@ -1,8 +1,8 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.incoming;
 
-import com.ncr.ATMMonitoring.serverchain.message.specific.UpdateRouterTableMessage;
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.StrategyMapper;
 import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp.UpdateRouterTableStrategy;
+import com.ncr.serverchain.message.specific.UpdateRouterTableMessage;
+import com.ncr.serverchain.message.specific.strategy.StrategyMapper;
 /**
  * message that indicate that an update must be done in the routerTable
  * @author Otto Abreu

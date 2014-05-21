@@ -6,13 +6,14 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import com.ncr.ATMMonitoring.routertable.RouterTableHandler;
-import com.ncr.ATMMonitoring.serverchain.message.specific.DirectCommunicationMessage;
-import com.ncr.ATMMonitoring.serverchain.message.specific.UpdateRouterTableMessage.UpdateType;
 import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateMultipleRouterTable;
-import com.ncr.ATMMonitoring.serverchain.message.specific.outgoing.ChangeLeafNodeRouterTableRequest;
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.IncomingMessage;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
+import com.ncr.serverchain.message.specific.DirectCommunicationMessage;
+import com.ncr.serverchain.message.specific.UpdateRouterTableMessage.UpdateType;
+import com.ncr.serverchain.message.specific.outgoing.ChangeLeafNodeRouterTableRequest;
+import com.ncr.serverchain.message.specific.strategy.BroadcastType;
+import com.ncr.serverchain.message.specific.strategy.imp.DirectNodeCommunication;
+import com.ncr.serverchain.message.wrapper.IncomingMessage;
+import com.ncr.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * <pre>

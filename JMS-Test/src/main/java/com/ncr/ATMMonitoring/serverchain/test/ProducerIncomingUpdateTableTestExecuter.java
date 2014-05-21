@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.MessagePublisher;
-import com.ncr.ATMMonitoring.serverchain.NodeInformation;
 import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateRouterTable;
+import com.ncr.serverchain.MessagePublisher;
+import com.ncr.serverchain.NodeInformation;
 
 @Component
 public class ProducerIncomingUpdateTableTestExecuter {

@@ -7,12 +7,13 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.ncr.ATMMonitoring.routertable.RouterTableHandler;
-import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
-import com.ncr.ATMMonitoring.serverchain.message.specific.UpdateRouterTableMessage.UpdateType;
 import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateMultipleRouterTable;
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
+import com.ncr.serverchain.message.specific.SpecificMessage;
+import com.ncr.serverchain.message.specific.UpdateRouterTableMessage.UpdateType;
+import com.ncr.serverchain.message.specific.strategy.BroadcastType;
+import com.ncr.serverchain.message.specific.strategy.imp.BaseStrategy;
+import com.ncr.serverchain.message.wrapper.MessageWrapper;
+import com.ncr.serverchain.message.wrapper.OutgoingMessage;
 
 /**
  * <pre>

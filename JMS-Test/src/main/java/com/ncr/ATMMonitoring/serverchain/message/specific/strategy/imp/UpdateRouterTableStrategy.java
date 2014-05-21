@@ -5,12 +5,13 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
 import com.ncr.ATMMonitoring.routertable.RouterTableHandler;
-import com.ncr.ATMMonitoring.serverchain.ChildrenLinkListHandler;
-import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
 import com.ncr.ATMMonitoring.serverchain.message.specific.incoming.UpdateRouterTable;
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.MessageWrapper;
-import com.ncr.ATMMonitoring.serverchain.message.wrapper.OutgoingMessage;
+import com.ncr.serverchain.ChildrenLinkListHandler;
+import com.ncr.serverchain.message.specific.SpecificMessage;
+import com.ncr.serverchain.message.specific.strategy.BroadcastType;
+import com.ncr.serverchain.message.specific.strategy.imp.BaseStrategy;
+import com.ncr.serverchain.message.wrapper.MessageWrapper;
+import com.ncr.serverchain.message.wrapper.OutgoingMessage;
 
 /**
  * <pre>

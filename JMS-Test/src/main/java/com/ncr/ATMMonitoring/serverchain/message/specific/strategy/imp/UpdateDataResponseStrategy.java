@@ -2,7 +2,8 @@ package com.ncr.ATMMonitoring.serverchain.message.specific.strategy.imp;
 
 import org.apache.log4j.Logger;
 
-import com.ncr.ATMMonitoring.serverchain.message.specific.strategy.BroadcastType;
+import com.ncr.serverchain.message.specific.strategy.BroadcastType;
+import com.ncr.serverchain.message.specific.strategy.imp.BaseStrategy;
 
 /**
  * @author Otto Abreu

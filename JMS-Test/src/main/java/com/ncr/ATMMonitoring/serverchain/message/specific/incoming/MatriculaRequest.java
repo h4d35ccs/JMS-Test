@@ -1,6 +1,6 @@
 package com.ncr.ATMMonitoring.serverchain.message.specific.incoming;
 
-import com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage;
+import com.ncr.serverchain.message.specific.SpecificMessage;
 
 /**
  * Holds the request for a new Matricula for an ATM

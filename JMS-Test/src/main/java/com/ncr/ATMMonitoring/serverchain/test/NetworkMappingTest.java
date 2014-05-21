@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.ncr.ATMMonitoring.serverchain.NodeInformation;
-import com.ncr.ATMMonitoring.serverchain.NodePosition;
-import com.ncr.ATMMonitoring.serverchain.networkmap.NetworkMapHandler;
+import com.ncr.serverchain.NodeInformation;
+import com.ncr.serverchain.NodePosition;
+import com.ncr.serverchain.networkmap.NetworkMapHandler;
 
 /**
  * @author Otto Abreu
