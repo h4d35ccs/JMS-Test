@@ -3,9 +3,15 @@
  */
 package com.ncr.serverchain;
 
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,28 +29,50 @@ import org.springframework.stereotype.Component;
 @Component
 public class NodeInformationImp implements NodeInformation {
 
-    @Value("${jms.parent.outgoing.topic.url:}")
+    
+    private static final String PROPERTY_FILE_NAME ="chainconfig.properties";
+	    
+    private static final String PARENT_OUTGOING_TOPIC_URL_KEY ="jms.parent.outgoing.topic.url";
     private String parentOutgoingTopicUrl;
 
-    @Value("${jms.outgoing.topic.name:}")
+    private static final String OUTGOING_TOPIC_NAME_KEY ="jms.outgoing.topic.name";
     private String outgoingTopicName;
 
-    @Value("${jms.localbroker.url:}")
+    private static final String LOCAL_BROKER_URL_KEY ="jms.localbroker.url";
     private String localBrokerUrl;
 
-    @Value("${jms.nodeleaf:}")
-    private String nodeLeaf;
 
-    @Value("${jms.incoming.topic.name:}")
+    private static final String INCOMING_TOPIC_NAME_KEY ="jms.incoming.topic.name";
     private String incomingTopicName;
 
-    @Value("${jms.broker.url.pattern:}")
+    private static final String BROKER_URL_PATTERN_KEY ="jms.broker.url.pattern";
     private String brokerUrlPattern;
 
     private static final String PATTERN_IP_TOKEN = "\\{ip\\}";
 
     @Autowired
     private ChildrenLinkListHandler childrenLinkListHandler;
+    
+    @PostConstruct
+    public void init() throws IOException{
+	
+	Properties nodeInfoProps = PropertiesLoaderUtils
+		    .loadProperties(new ClassPathResource(PROPERTY_FILE_NAME));
+	this.setPrivateValuesFromProperties(nodeInfoProps);
+    }
+    
+    private void setPrivateValuesFromProperties(Properties nodeInfoProps){
+	this.parentOutgoingTopicUrl = this.getPropertyValue(nodeInfoProps, PARENT_OUTGOING_TOPIC_URL_KEY);
+	this.outgoingTopicName = this.getPropertyValue(nodeInfoProps, OUTGOING_TOPIC_NAME_KEY);
+	this.localBrokerUrl = this.getPropertyValue(nodeInfoProps, LOCAL_BROKER_URL_KEY);
+	this.incomingTopicName = this.getPropertyValue(nodeInfoProps, INCOMING_TOPIC_NAME_KEY);
+	this.brokerUrlPattern = this.getPropertyValue(nodeInfoProps, BROKER_URL_PATTERN_KEY);
+    }
+    
+    private String getPropertyValue(Properties nodeInfoProps, String key){
+	String propertyValue = nodeInfoProps.getProperty(key, "");
+	return propertyValue;
+    }
     
     /*
      * (non-Javadoc)
