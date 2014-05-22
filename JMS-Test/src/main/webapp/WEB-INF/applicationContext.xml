@@ -18,13 +18,13 @@
 	        type="annotation"/>
     </context:component-scan>
 
-	<!-- <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+	 <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 	  <property name="location">
 	    <value>classpath:config.properties</value>
 	  </property>
 	  <property name="ignoreUnresolvablePlaceholders" value="true"/>
 	</bean>
- -->
+ 
 	<!-- <bean id="jdbcConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 	  <property name="location">
 	    <value>classpath:jdbc.properties</value>
