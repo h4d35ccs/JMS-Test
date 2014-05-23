@@ -44,11 +44,11 @@ public class RouterTableHandler {
      *            int
      * @return boolean
      */
-    public static boolean matriculaIsInRouterTable(int matricula) {
+    public static boolean matriculaIsInRouterTable(long matricula) {
 
 	boolean isPresent = false;
 
-	String matriculaPresent = config.getString(Integer.toString(matricula),
+	String matriculaPresent = config.getString(Long.toString(matricula),
 		MATRICULA_NOT_PRESENT_DEFAULT_VALUE);
 
 	if (StringUtils.isNotEmpty(matriculaPresent)) {

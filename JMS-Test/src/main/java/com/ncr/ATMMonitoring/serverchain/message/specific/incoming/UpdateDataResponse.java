@@ -45,7 +45,7 @@ public class UpdateDataResponse implements SpecificMessage{
         return originalRequest.getAtmIp();
     }
 
-    public int getMatricula() {
+    public Long getMatricula() {
         return originalRequest.getMatricula();
     }
 

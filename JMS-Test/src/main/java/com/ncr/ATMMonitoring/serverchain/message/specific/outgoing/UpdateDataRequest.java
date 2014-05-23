@@ -17,10 +17,10 @@ public class UpdateDataRequest implements SpecificMessage {
 
     private String atmIp;
     
-    private int matricula;
+    private Long matricula;
     
  
-    public UpdateDataRequest(String atmIp, int matricula) {
+    public UpdateDataRequest(String atmIp, long matricula) {
 	super();
 	this.atmIp = atmIp;
 	this.matricula = matricula;
@@ -30,7 +30,7 @@ public class UpdateDataRequest implements SpecificMessage {
         return atmIp;
     }
 
-    public int getMatricula() {
+    public Long getMatricula() {
         return matricula;
     }
     
