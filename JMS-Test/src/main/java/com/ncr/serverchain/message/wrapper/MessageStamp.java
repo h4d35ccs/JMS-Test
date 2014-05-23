@@ -29,7 +29,9 @@ public class MessageStamp {
 
 	MessageWrapper msgWrapper = this.extractInfoFromMessageWrapper(message,
 		nodeLocalAddress);
-	String stampUpdated = this.sendStamp(nodeLocalAddress);
+	Date nowDate = this.getNowDate();
+	
+	String stampUpdated = this.sendStamp(nodeLocalAddress,nowDate);
 	msgWrapper.setStamp(stampUpdated);
 
     }
@@ -45,6 +47,10 @@ public class MessageStamp {
 
 	return msgWrapper;
     }
+    
+    private Date getNowDate(){
+  	return new Date();
+      }
 
     private void verifyIfMessageIsAWrapper(Serializable message) {
 
@@ -57,10 +63,10 @@ public class MessageStamp {
 	}
     }
 
-    private String sendStamp(String serverIp) {
+    private String sendStamp(String serverIp,Date nowDate ){
 	
 	double secondsSinceSend = this.calculateTimeSinceSentOrReceived(
-		this.generatedDate, new Date());
+		this.generatedDate,nowDate);
 	return this.stampMessage(serverIp, secondsSinceSend, "Sent at");
     }
     /**
@@ -73,15 +79,16 @@ public class MessageStamp {
 	
 	MessageWrapper msgWrapper = this.extractInfoFromMessageWrapper(message,
 		nodeLocalAddress);
-	String stampUpdated = this.receivedStamp(nodeLocalAddress);
+	Date nowDate = this.getNowDate();
+	String stampUpdated = this.receivedStamp(nodeLocalAddress,nowDate);
 	msgWrapper.setStamp(stampUpdated);
 
     }
 
-    private String receivedStamp(String serverIp) {
+    private String receivedStamp(String serverIp,Date nowDate) {
 	
 	double secondsSinceSend = this.calculateTimeSinceSentOrReceived(
-		this.generatedDate, new Date());
+		this.generatedDate, nowDate);
 	return this.stampMessage(serverIp, secondsSinceSend, "Received at");
     }
 
@@ -108,7 +115,9 @@ public class MessageStamp {
 	long sendTime = generatedDate.getTime();
 	long actual = whenMessageHasPass.getTime();
 	double diference = (actual - sendTime);
-	double timeInSeconds = diference / 100;
+	double timeInSeconds = diference / 1000;
 	return timeInSeconds;
     }
+    
+  
 }
