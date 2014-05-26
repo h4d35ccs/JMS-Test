@@ -44,6 +44,11 @@ public abstract class TopicConsumer extends TopicActor {
     protected abstract MessageListener getSpecificListener();
 
     protected abstract String getTopicName();
+    
+    protected boolean CREATE_DURABLE_SUBSCRIBER = true;
+    
+    protected boolean CREATE_NONDURABLE_SUBSCRIBER = false;
+    
 
     public void consumeMessage() {
 
@@ -112,7 +117,21 @@ public abstract class TopicConsumer extends TopicActor {
 
     protected MessageConsumer createMessageConsumer(Session session, Topic topic)
 	    throws JMSException {
-	return session.createDurableSubscriber(topic, this.getSubscriberId());
+	MessageConsumer consumer = null;
+	
+	if(createDurableSubscriber()){
+	    
+	    consumer = session.createDurableSubscriber(topic, this.getSubscriberId());
+	    
+	}else{
+	    
+	    consumer = session.createConsumer(topic);
+	}
+	return consumer;
+    }
+    
+    protected boolean createDurableSubscriber(){
+	return CREATE_DURABLE_SUBSCRIBER;
     }
 
     @PreDestroy

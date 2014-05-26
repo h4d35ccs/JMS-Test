@@ -1,5 +1,7 @@
 package com.ncr.serverchain.topicactor.consumer;
 
+import java.util.Date;
+
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
@@ -39,8 +41,8 @@ public class SubscribersTopicConsumer extends TopicConsumer {
 
     @Override
     protected String getSubscriberId() {
-
-	return this.getClientId(LOCAL_MONITOR_SUBSCRIBER_BASE_ID);
+	long extraId = new Date().getTime();
+	return this.getClientId(LOCAL_MONITOR_SUBSCRIBER_BASE_ID+extraId);
     }
 
     @Override
@@ -63,6 +65,11 @@ public class SubscribersTopicConsumer extends TopicConsumer {
 
 	throw new UnsupportedOperationException(
 		"This class uses AdvisorySupport.getConnectionAdvisoryTopic() to get the topic, calling this method is not valid");
+    }
+    
+    @Override
+    protected boolean createDurableSubscriber(){
+	return CREATE_NONDURABLE_SUBSCRIBER;
     }
 
 }
