@@ -87,7 +87,7 @@ public class NetworkMappingRequestStrategy extends BaseStrategy {
     @Override
     public MessageWrapper getTurnBackMessage() {
 	
-	MessageWrapper turnbackMessage =  new IncomingMessage("Network mapping response",(int)new Date().getTime());;
+	MessageWrapper turnbackMessage =  new IncomingMessage("Network mapping response",new Date().getTime());
 	turnbackMessage.setSpecificMessage(this.response);
 	return turnbackMessage;
     }
