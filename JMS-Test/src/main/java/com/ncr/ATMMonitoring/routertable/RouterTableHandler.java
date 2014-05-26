@@ -69,16 +69,16 @@ public class RouterTableHandler {
      * @param ipNodeInCharge
      *            String
      */
-    public static void addMatriculaAndIpToTable(int matricula,
+    public static void addMatriculaAndIpToTable(long matricula,
 	    String ipNodeInCharge) {
 
 	try {
 
-	    if(config.containsKey(Integer.toString(matricula))){
+	    if(config.containsKey(Long.toString(matricula))){
 		
-		config.clearProperty(Integer.toString(matricula));
+		config.clearProperty(Long.toString(matricula));
 	    }
-	    config.addProperty(Integer.toString(matricula), ipNodeInCharge);
+	    config.addProperty(Long.toString(matricula), ipNodeInCharge);
 
 	} catch (Exception e) {
 
@@ -94,9 +94,9 @@ public class RouterTableHandler {
      * @param matricula
      *            int
      */
-    public static void removeMatriculaFromTable(int matricula) {
+    public static void removeMatriculaFromTable(long matricula) {
 
-	config.clearProperty(Integer.toString(matricula));
+	config.clearProperty(Long.toString(matricula));
     }
 
     /**
@@ -105,8 +105,8 @@ public class RouterTableHandler {
      * @param matricula
      * @return String
      */
-    public static String getNodeInCharge(int matricula) {
-	return config.getString(Integer.toString(matricula));
+    public static String getNodeInCharge(long matricula) {
+	return config.getString(Long.toString(matricula));
     }
 
     /**

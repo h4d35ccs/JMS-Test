@@ -184,7 +184,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	    OutgoingMessage message) {
 
 	String originalOutgoingMessage = message.getMessage();
-	int originalOutgoingId = message.getId();
+	long originalOutgoingId = message.getId();
 	SpecificMessage originalSpecificMessage = message.getSpecificMessage();
 
 	IncomingMessage incomingMessage = new IncomingMessage(
@@ -207,7 +207,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	    IncomingMessage message) {
 
 	String originalIncomingMessage = message.getMessage();
-	int originalIncomingId = message.getId();
+	long originalIncomingId = message.getId();
 	SpecificMessage originalSpecificMessage = message.getSpecificMessage();
 
 	OutgoingMessage outmessage = new OutgoingMessage(
