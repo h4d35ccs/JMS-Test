@@ -14,17 +14,17 @@ public class UpdateRouterTable extends UpdateRouterTableMessage{
     
     private static final long serialVersionUID = 1L;
     
-    private int matricula;
+    private long matricula;
     private String newFinalNodeInCharge;
    
-    public UpdateRouterTable(int matricula, String newFinalNodeInCharge) {
+    public UpdateRouterTable(long matricula, String newFinalNodeInCharge) {
 	super();
 	this.matricula = matricula;
 	this.newFinalNodeInCharge = newFinalNodeInCharge;
 
     }
 
-    public int getMatricula() {
+    public long getMatricula() {
         return matricula;
     }
    
