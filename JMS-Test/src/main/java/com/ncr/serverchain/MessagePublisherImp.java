@@ -29,7 +29,7 @@ public class MessagePublisherImp implements MessagePublisher {
 
     private String FORCE_USE_DEFAULT_WRAPPER_MESSAGE = "";
 
-    private static int DEFAUTL_ID = (int)new Date().getTime();
+    private static long DEFAUTL_ID = new Date().getTime();
 
     @Override
     public void publishOutgoingMessage(MessageWrapper messageWrapper) {
@@ -139,7 +139,7 @@ public class MessagePublisherImp implements MessagePublisher {
 	this.publishIncomingMessage(inMessage);
     }
 
-    private MessageWrapper instanciateOutgoingMessage(int id,
+    private MessageWrapper instanciateOutgoingMessage(long id,
 	    String wrapperMessage, SpecificMessage specificMessage) {
 	MessageWrapper outgoingMessage = null;
 
@@ -155,7 +155,7 @@ public class MessagePublisherImp implements MessagePublisher {
 	return outgoingMessage;
     }
 
-    private MessageWrapper instanciateIncomingMessage(int id,
+    private MessageWrapper instanciateIncomingMessage(long id,
 	    String wrapperMessage, SpecificMessage specificMessage) {
 
 	MessageWrapper incomingMessage = null;
