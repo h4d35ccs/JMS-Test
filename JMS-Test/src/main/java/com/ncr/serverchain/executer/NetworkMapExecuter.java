@@ -10,28 +10,30 @@ import com.ncr.serverchain.NodePosition;
 import com.ncr.serverchain.message.specific.outgoing.NetworkMappingRequest;
 
 /**
- * Sends the Network Map Request in a given time period 
+ * Sends the Network Map Request in a given time period
+ * 
  * @author Otto Abreu
- *
+ * 
  */
 @Component
 public class NetworkMapExecuter {
 
-    @Autowired
-    private NodeInformation nodePosition;
-    
-    @Autowired
-    private MessagePublisher messagePublisher;
+	@Autowired
+	private NodeInformation nodePosition;
 
-    @Scheduled(fixedDelay = 60000)
-    public void runNetworkMap() {
-	
-	if(nodePosition.getNodePosition().equals(NodePosition.FIRST_NODE)){
-	    
-	    NetworkMappingRequest networkMappingRequest = new NetworkMappingRequest();
-	    
-	    messagePublisher.publishOutgoingMessage("Network Mapping Request",networkMappingRequest);
-	   
+	@Autowired
+	private MessagePublisher messagePublisher;
+
+	@Scheduled(fixedDelay = 40000)
+	public void runNetworkMap() {
+
+		if (nodePosition.getNodePosition().equals(NodePosition.FIRST_NODE)) {
+
+			NetworkMappingRequest networkMappingRequest = new NetworkMappingRequest();
+
+			messagePublisher.publishOutgoingMessage("Network Mapping Request",
+					networkMappingRequest);
+
+		}
 	}
-    }
 }
