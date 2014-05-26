@@ -95,7 +95,7 @@ public class UpdateRouterTableStrategy extends BaseStrategy {
 
     private boolean matriculaIsPresentInLocalTable() {
 
-	int matricula = this.updateMessage.getMatricula();
+	long matricula = this.updateMessage.getMatricula();
 	boolean isPresent = RouterTableHandler
 		.matriculaIsInRouterTable(matricula);
 
@@ -105,7 +105,7 @@ public class UpdateRouterTableStrategy extends BaseStrategy {
 
     private boolean diferentProcessingNodePressent() {
 
-	int matricula = this.updateMessage.getMatricula();
+	long matricula = this.updateMessage.getMatricula();
 	String newProcessingNode = this.updateMessage.getNewFinalNodeInCharge();
 	String actualNodeInCharge = RouterTableHandler
 		.getNodeInCharge(matricula);
@@ -143,12 +143,12 @@ public class UpdateRouterTableStrategy extends BaseStrategy {
     @Override
     public void processSpecificMessage() {
 
-	int matricula = this.updateMessage.getMatricula();
+	long matricula = this.updateMessage.getMatricula();
 	this.processByNodePosition(matricula);
 
     }
 
-    private void processByNodePosition(int matricula) {
+    private void processByNodePosition(long matricula) {
 
 	if (isRoot()) {
 	    // i only change the type after arriving the root
@@ -181,7 +181,7 @@ public class UpdateRouterTableStrategy extends BaseStrategy {
 	}
     }
 
-    private void proccessByOperationMiddle(int matricula) {
+    private void proccessByOperationMiddle(long matricula) {
 
 	if (isUpdate() || isForcedUpdateFromRoot()) {
 
@@ -248,7 +248,7 @@ public class UpdateRouterTableStrategy extends BaseStrategy {
 	}
     }
 
-    private boolean isOldProcessingNodeaAChild(int matricula) {
+    private boolean isOldProcessingNodeaAChild(long matricula) {
 
 	String actualNodeInCharge = RouterTableHandler
 		.getNodeInCharge(matricula);
@@ -258,13 +258,13 @@ public class UpdateRouterTableStrategy extends BaseStrategy {
 
     }
 
-    private void updateValueInTable(int matricula) {
+    private void updateValueInTable(long matricula) {
 
 	RouterTableHandler.removeMatriculaFromTable(matricula);
 	this.addValueToTable(matricula);
     }
 
-    private void addValueToTable(int matricula) {
+    private void addValueToTable(long matricula) {
 	String ipNodeInCharge = this.updateMessage.getNewFinalNodeInCharge();
 	RouterTableHandler.addMatriculaAndIpToTable(matricula, ipNodeInCharge);
     }

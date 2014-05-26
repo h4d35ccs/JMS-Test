@@ -132,7 +132,7 @@ public class UpdateDataRequestStrategy extends BaseStrategy {
 	
 	this.turnedBackMessage = new IncomingMessage("Message incoming from: "
 		+ this.nodeInformation.getLocalBrokerUrl(),
-		(int) new Date().getTime());
+		 new Date().getTime());
 	
 	this.turnedBackMessage.setSpecificMessage(udr);
     }

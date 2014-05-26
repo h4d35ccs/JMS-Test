@@ -265,7 +265,7 @@ public class UpdateMultipleRouterTableStrategy extends BaseStrategy {
     public MessageWrapper getTurnBackMessage() {
 	
 	OutgoingMessage turnBackMessage = new OutgoingMessage(
-		"Change router table multiple", (int) new Date().getTime());
+		"Change router table multiple",  new Date().getTime());
 	SpecificMessage message = this.generateTurnBackOnRoot();
 	
 	turnBackMessage.setSpecificMessage(message);
