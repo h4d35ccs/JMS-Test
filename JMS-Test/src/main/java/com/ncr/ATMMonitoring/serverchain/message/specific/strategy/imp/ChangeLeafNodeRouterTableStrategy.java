@@ -117,7 +117,7 @@ public class ChangeLeafNodeRouterTableStrategy extends DirectNodeCommunication {
 	
 	multipleUpdate.setUpdateType(UpdateType.UPDATE);
 	IncomingMessage turnbackMessage = new IncomingMessage(
-		"Multiple table Update", (int) new Date().getTime());
+		"Multiple table Update",  new Date().getTime());
 	turnbackMessage.setSpecificMessage(multipleUpdate);
 	
 	return turnbackMessage;
