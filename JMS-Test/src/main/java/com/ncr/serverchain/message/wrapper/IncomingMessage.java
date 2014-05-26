@@ -22,12 +22,12 @@ public class IncomingMessage extends MessageWrapper {
     private static final long serialVersionUID = -6457607990812054891L;
     
 
-    public IncomingMessage(String message, int id) {
+    public IncomingMessage(String message, Long id) {
 	super(message, id);
 
     }
     
-    public IncomingMessage(int id) {
+    public IncomingMessage(Long id) {
    	super(DEFAULT_INCOMINGMESSAGE_INNER_MESSAGE, id);
 
        }

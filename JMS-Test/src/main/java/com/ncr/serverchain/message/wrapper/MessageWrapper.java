@@ -29,7 +29,7 @@ public abstract class MessageWrapper implements Serializable, VisitableMessageWr
     private static final long serialVersionUID = -5407451191989252146L;
 
     private String message;
-    private int id;
+    private long id;
     private Date generatedDate;
     private String stamp = "";
     private SpecificMessage specificMessage;
@@ -39,7 +39,7 @@ public abstract class MessageWrapper implements Serializable, VisitableMessageWr
 	this.generatedDate = new Date();
     }
 
-    public MessageWrapper(String message, int id) {
+    public MessageWrapper(String message, long id) {
 	super();
 	this.message = message;
 	this.id = id;
@@ -50,7 +50,7 @@ public abstract class MessageWrapper implements Serializable, VisitableMessageWr
 	return message;
     }
 
-    public int getId() {
+    public long getId() {
 	return id;
     }
 
