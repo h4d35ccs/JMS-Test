@@ -2,44 +2,44 @@ package com.ncr.serverchain;
 
 /**
  * Define the possible positions that a node could have
+ * 
  * @author Otto Abreu
- *
+ * 
  */
 public enum NodePosition {
-    
-    FIRST_NODE{
+
+    FIRST_NODE {
 	@Override
-	public String toString(){
+	public String toString() {
 	    return "First node";
 	}
-    }, 
-    LEAF_NODE{
-	
+    },
+    LEAF_NODE {
+
 	@Override
-	public String toString(){
+	public String toString() {
 	    return "Leaf node";
 	}
-	
-    }, 
-    MIDDLE_NODE{
+
+    },
+    MIDDLE_NODE {
 
 	@Override
 	public String toString() {
 	    return "Middle node";
 	}
-	
-    }, 
-    ONLY_NODE{
+
+    },
+    ONLY_NODE {
 
 	@Override
 	public String toString() {
-	   
+
 	    return "Only Node";
 	}
-	
+
     };
-    
-    
+
     @Override
     public abstract String toString();
 

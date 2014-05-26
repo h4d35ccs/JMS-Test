@@ -28,12 +28,12 @@ import com.ncr.serverchain.topicactor.TopicActor;
 @Component
 public class ChildrenLinkListHandler {
 
-   
     private Set<String> childrenSubscribed = new HashSet<String>();
 
     /**
-     * verify if the given ip is already in the subscription list
-     * This does not ask to the current subscription status handle by JMS
+     * verify if the given ip is already in the subscription list This does not
+     * ask to the current subscription status handle by JMS
+     * 
      * @param childIpandPort
      * @return boolean
      */
@@ -47,9 +47,10 @@ public class ChildrenLinkListHandler {
 
 	return childSubscribed;
     }
-    
+
     /**
      * Returns a copy of the current list of subscribed childrens
+     * 
      * @return Set<String>
      */
     public Set<String> getChildrenSubscribed() {
@@ -57,8 +58,9 @@ public class ChildrenLinkListHandler {
     }
 
     /**
-     * Adds a child ip to the list of subscriptions
-     * This does not affect the current subscription status handle by JMS
+     * Adds a child ip to the list of subscriptions This does not affect the
+     * current subscription status handle by JMS
+     * 
      * @param childIpandPort
      */
     public void addChildIpToSubscribedList(String childIpandPort) {
@@ -66,9 +68,11 @@ public class ChildrenLinkListHandler {
 	this.childrenSubscribed.add(childIpandPort);
 
     }
+
     /**
-     * Removes a child ip from the list of subscriptions.
-     * This does not affect the current subscription status handle by JMS
+     * Removes a child ip from the list of subscriptions. This does not affect
+     * the current subscription status handle by JMS
+     * 
      * @param childIpandPort
      */
     public void removeChildIpToSubscribedList(String childIpandPort) {
@@ -91,6 +95,7 @@ public class ChildrenLinkListHandler {
 
     /**
      * Returns only ip and port from the connectionID
+     * 
      * @param completeChildId
      * @return String
      */

@@ -1,13 +1,19 @@
 package com.ncr.serverchain;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Class that construct the main objects of  serverchain ( NodeInformation and MessagePublisher)
+ * Class that construct the main objects of serverchain ( NodeInformation and
+ * MessagePublisher)
  * 
  * This class should be used in those environments where is not possible to get
- * the NodeInformation or MessagePublisher class using the autowired attribute of spring
+ * the NodeInformation or MessagePublisher class using the autowired attribute
+ * of spring.
+ * 
+ * This class uses serverchain-MainBeanFactory-config.xml in order to get the
+ * beans
  * 
  * @author Otto Abreu
  * 
@@ -24,7 +30,8 @@ public class ServerchainMainBeanFactory {
      * 
      * @return NodeInformation
      */
-    public static NodeInformation getNodeInformationInstance(String[] springConfigFiles) {
+    public static NodeInformation getNodeInformationInstance(
+	    String[] springConfigFiles) {
 
 	ApplicationContext context = getSpringApplicationContext(springConfigFiles);
 	NodeInformation nodeInfo = context.getBean(NodeInformation.class);
@@ -34,19 +41,19 @@ public class ServerchainMainBeanFactory {
     /**
      * <pre>
      * Returns the NodeInformation object using the ApplicationContext obtained from the default
-     * spring config file: serverchain-config.xm
+     * spring config file: serverchain-config.xml ("classpath:** /serverchain-config.xml")
      * this method uses ClassPathXmlApplicationContext in order to get the ApplicationContext
      * </pre>
      * 
      * @return NodeInformation
      */
-    public static NodeInformation getNodeInformationInstance() {
+    public static NodeInformation getNodeInformationInstance(
+	    ApplicationContext context) {
 
-	ApplicationContext context = getDefaultSpringApplicationContext();
 	NodeInformation nodeInfo = context.getBean(NodeInformation.class);
 	return nodeInfo;
     }
-    
+
     /**
      * <pre>
      * Returns the MessagePublisher object using the ApplicationContext obtained from the given
@@ -57,41 +64,42 @@ public class ServerchainMainBeanFactory {
      * 
      * @return NodeInformation
      */
-    public static MessagePublisher getMessagePublisherInstance(String[] springConfigFiles) {
+    public static MessagePublisher getMessagePublisherInstance(
+	    String[] springConfigFiles) {
 
 	ApplicationContext context = getSpringApplicationContext(springConfigFiles);
 	MessagePublisher nodeInfo = context.getBean(MessagePublisher.class);
 	return nodeInfo;
     }
 
-    
     /**
      * <pre>
-    * Returns the MessagePublisher object using the ApplicationContext obtained from the default
-    * spring config file: serverchain-config.xm
-    * this method uses ClassPathXmlApplicationContext in order to get the ApplicationContext
-    * </pre>
+     * Returns the MessagePublisher object using the ApplicationContext obtained from the default
+     * spring config file: serverchain-config.xm ("classpath:** /serverchain-config.xml")
+     * this method uses ClassPathXmlApplicationContext in order to get the ApplicationContext
+     * </pre>
+     * 
      * @return MessagePublisher
      */
-    public static MessagePublisher getMessagePublisherInstance(){
-	ApplicationContext context = getDefaultSpringApplicationContext();
-	MessagePublisher messagePublisher = context.getBean(MessagePublisher.class);
+    public static MessagePublisher getMessagePublisherInstance(
+	    ApplicationContext context) {
+
+	MessagePublisher messagePublisher = context
+		.getBean(MessagePublisher.class);
 	return messagePublisher;
     }
-    
-    
-    
-    private static ApplicationContext  getDefaultSpringApplicationContext(){
-	ApplicationContext context = getSpringApplicationContext(new String[] { "serverchain-config.xml" });
-	return context;
-    }
-    
 
     private static ApplicationContext getSpringApplicationContext(
 	    String[] configFiles) {
 
-	ApplicationContext context = new ClassPathXmlApplicationContext(
-		configFiles);
+	ApplicationContext context = null;
+	try {
+	    context = new ClassPathXmlApplicationContext(configFiles);
+
+	} catch (BeansException e) {
+
+	    e.printStackTrace();
+	}
 
 	return context;
 
