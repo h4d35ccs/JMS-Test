@@ -10,7 +10,7 @@ import com.ncr.serverchain.message.wrapper.MessageWrapper;
 
 /**
  * @author Otto Abreu
- *
+ * 
  */
 public abstract class BaseStrategy implements SpecifcMessageProcessStrategy {
 
@@ -18,73 +18,81 @@ public abstract class BaseStrategy implements SpecifcMessageProcessStrategy {
     protected SpecificMessage messageToProcess;
     protected ApplicationContext springContext;
 
-    
-    /* (non-Javadoc)
-     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#setupStrategy(com.ncr.ATMMonitoring.serverchain.NodeInformation, com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.
+     * SpecifcMessageProcessStrategy
+     * #setupStrategy(com.ncr.ATMMonitoring.serverchain.NodeInformation,
+     * com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage)
      */
     @Override
-    public void setupStrategy(
-	    SpecificMessage message, ApplicationContext springContext) {
+    public void setupStrategy(SpecificMessage message,
+	    ApplicationContext springContext) {
 
 	this.messageToProcess = message;
 	this.springContext = springContext;
-	this.nodeInformation = (NodeInformation)this.getSpringBean(NodeInformation.class);
+	this.nodeInformation = (NodeInformation) this
+		.getSpringBean(NodeInformation.class);
 
     }
-    
-    protected boolean isLeaf(){
-	
-   	if(this.nodeInformation.getNodePosition()
-   	.equals(NodePosition.LEAF_NODE)){
-   	    
-   	    return true;
-   	    
-   	}else{
-   	    
-   	    return false;
-   	}
-       }
+
+    protected boolean isLeaf() {
+
+	if (this.nodeInformation.getNodePosition().equals(
+		NodePosition.LEAF_NODE)) {
+
+	    return true;
+
+	} else {
+
+	    return false;
+	}
+    }
 
     protected boolean isRoot() {
 
-   	if (this.nodeInformation.getNodePosition().equals(
-   		NodePosition.FIRST_NODE)) {
+	if (this.nodeInformation.getNodePosition().equals(
+		NodePosition.FIRST_NODE)) {
 
-   	    return true;
+	    return true;
 
-   	} else {
+	} else {
 
-   	    return false;
-   	}
-       }
-       
-    protected boolean isMiddle(){
-   	
-   	if (this.nodeInformation.getNodePosition()
-   		.equals(NodePosition.MIDDLE_NODE)){
-   	    return true;
-   	}else{
-   	    return false;
-   	}
-     }
-    
+	    return false;
+	}
+    }
+
+    protected boolean isMiddle() {
+
+	if (this.nodeInformation.getNodePosition().equals(
+		NodePosition.MIDDLE_NODE)) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
     /*
      * (non-Javadoc)
-     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.SpecifcMessageProcessStrategy#getTurnBackdMessage()
+     * 
+     * @see com.ncr.ATMMonitoring.serverchain.message.specific.strategy.
+     * SpecifcMessageProcessStrategy#getTurnBackdMessage()
      */
     @Override
     public MessageWrapper getTurnBackMessage() {
-	
+
 	return null;
     }
+
     /**
      * Returns a spring bean from the given Application context
+     * 
      * @param springbeanClass
      * @return Object
      */
-    protected Object getSpringBean(Class<?> springbeanClass){
-	return this.springContext
-	.getBean(springbeanClass);
+    protected Object getSpringBean(Class<?> springbeanClass) {
+	return this.springContext.getBean(springbeanClass);
     }
 
 }
