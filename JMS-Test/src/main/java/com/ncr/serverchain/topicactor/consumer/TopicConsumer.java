@@ -20,6 +20,8 @@ import org.springframework.stereotype.Component;
 import com.ncr.serverchain.topicactor.TopicActor;
 
 /**
+ * Class that holds the generic logic to consume messages from a topic
+ * Implements Template method pattern
  * @author Otto Abreu
  * 
  */
@@ -37,12 +39,32 @@ public abstract class TopicConsumer extends TopicActor {
     @Autowired
     protected ApplicationContext springContext;
 
+    /**
+     * Returns the id to be use by the subscriber
+     * @return
+     */
     protected abstract String getSubscriberId();
 
+    /**
+     * 
+     * Returns the broker type to connect with 
+     * Use {@link TopicActor#USE_EXTERNAL_BROKER_URL} to refer to an remote broker,
+     *  {@link TopicActor#USE_CHILD_INCOMING_BROKER_URL} to refer to a remote child incoming broker
+     *   {@link TopicActor#USE_PARENT_OUTGOING_BROKER_URL} to refer to a parent remote outgoing broker
+     * @return int
+     */
     protected abstract int getBrokerType();
 
+    /**
+     * Sets the listener to use in this class
+     * @return MessageListener
+     */
     protected abstract MessageListener getSpecificListener();
 
+    /**
+     * Returns the name of the topic to connect with
+     * @return String
+     */
     protected abstract String getTopicName();
     
     protected boolean CREATE_DURABLE_SUBSCRIBER = true;
@@ -50,6 +72,9 @@ public abstract class TopicConsumer extends TopicActor {
     protected boolean CREATE_NONDURABLE_SUBSCRIBER = false;
     
 
+    /**
+     * Method that execute the logic to consume the messages in the queue
+     */
     public void consumeMessage() {
 
 	try {
@@ -74,6 +99,11 @@ public abstract class TopicConsumer extends TopicActor {
 	this.messageConsumer.setMessageListener(this.getSpecificListener());
     }
 
+    /**
+     * Setup the class to consume messages.
+     * Uses the getBrokerType to know to whom this class with connect
+     * @throws JMSException
+     */
     public void setup() throws JMSException {
 
 	if (!this.connected) {
@@ -90,6 +120,12 @@ public abstract class TopicConsumer extends TopicActor {
 	}
     }
 
+    /**
+     *  Setup the class to consume messages.
+     *  Receives the url to connect with
+     * @param remoteBrokerUrl
+     * @throws JMSException
+     */
     public void setup(String remoteBrokerUrl) throws JMSException {
 	this.setExternalBrokerUrl(remoteBrokerUrl);
 	this.setup();
@@ -115,6 +151,13 @@ public abstract class TopicConsumer extends TopicActor {
 	return connectionFactory;
     }
 
+    /**
+     * Creates the durable or non durable  message consumer 
+     * @param session
+     * @param topic
+     * @return
+     * @throws JMSException
+     */
     protected MessageConsumer createMessageConsumer(Session session, Topic topic)
 	    throws JMSException {
 	MessageConsumer consumer = null;
@@ -129,7 +172,13 @@ public abstract class TopicConsumer extends TopicActor {
 	}
 	return consumer;
     }
-    
+    /**
+     * Returns true if this class will create durable subscribers,
+     * false will create non durable subscribers.
+     * 
+     * Overwrite this method to change default behavior
+     * @return boolean
+     */
     protected boolean createDurableSubscriber(){
 	return CREATE_DURABLE_SUBSCRIBER;
     }

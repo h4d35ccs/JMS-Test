@@ -14,7 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ncr.serverchain.NodeInformation;
-
+/**
+ * Class that hold de basic logic for interact ( consume or produce messages) with a topic
+ * @author Otto Abreu
+ *
+ */
 @Component
 public abstract class TopicActor {
 

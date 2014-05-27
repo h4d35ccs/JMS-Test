@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ncr.serverchain.message.listener;
 
 import javax.annotation.Resource;

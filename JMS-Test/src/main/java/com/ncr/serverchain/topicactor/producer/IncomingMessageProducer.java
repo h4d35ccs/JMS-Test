@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.ncr.serverchain.message.wrapper.MessageStamp;
 
 /**
+ * Class in charge of producing ( publishing) messages in incoming topics
  * @author Otto Abreu
  *
  */

@@ -1,7 +1,5 @@
 package com.ncr.serverchain.topicactor.consumer;
 
-import java.util.Date;
-
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
@@ -13,7 +11,12 @@ import org.apache.activemq.advisory.AdvisorySupport;
 import org.springframework.stereotype.Component;
 
 import com.ncr.serverchain.message.listener.ChildrenSubscribersListener;
-
+/**
+ * Class that consume messages from an administrative queue where the information
+ * of the subscribers is
+ * @author Otto Abreu
+ *
+ */
 @Component("subscribersTopicConsumer")
 public class SubscribersTopicConsumer extends TopicConsumer {
 
@@ -41,8 +44,8 @@ public class SubscribersTopicConsumer extends TopicConsumer {
 
     @Override
     protected String getSubscriberId() {
-	long extraId = new Date().getTime();
-	return this.getClientId(LOCAL_MONITOR_SUBSCRIBER_BASE_ID+extraId);
+	
+	return this.getClientId(LOCAL_MONITOR_SUBSCRIBER_BASE_ID);
     }
 
     @Override
@@ -67,9 +70,5 @@ public class SubscribersTopicConsumer extends TopicConsumer {
 		"This class uses AdvisorySupport.getConnectionAdvisoryTopic() to get the topic, calling this method is not valid");
     }
     
-    @Override
-    protected boolean createDurableSubscriber(){
-	return CREATE_NONDURABLE_SUBSCRIBER;
-    }
 
 }

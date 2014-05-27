@@ -15,7 +15,11 @@ import org.apache.log4j.Logger;
 import com.ncr.serverchain.message.Stamper;
 import com.ncr.serverchain.topicactor.TopicActor;
 
-
+/**
+ * Class that holds the basic logic for publishing messages in a topic
+ * @author Otto Abreu
+ *
+ */
 public abstract class GenericMessageProducer  extends TopicActor implements Stamper  {
 
 

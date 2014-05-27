@@ -9,6 +9,11 @@ import org.springframework.stereotype.Component;
 import com.ncr.serverchain.message.Stamper;
 import com.ncr.serverchain.message.wrapper.MessageStamp;
 
+/**
+ * Class in charge of producing ( publishing) messages in outgoing topics
+ * @author Otto Abreu
+ *
+ */
 @Component("outgoingMessageProducer")
 public class OutgoingMessageProducer  extends GenericMessageProducer implements Stamper  {
 
