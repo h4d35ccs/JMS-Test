@@ -45,7 +45,7 @@ public interface MessagePublisher {
      *            wrapper id
      * @param wrappedMessage
      */
-    public void publishOutgoingMessage(int id, SpecificMessage wrappedMessage);
+    public void publishOutgoingMessage(long id, SpecificMessage wrappedMessage);
 
     /**
      * Instantiate a MessageWrapper with the given wrapper message and default
@@ -70,7 +70,7 @@ public interface MessagePublisher {
      * @param wrappedMessage
      *            SpecificMessage
      */
-    public void publishOutgoingMessage(int id, String wrapperMessage,
+    public void publishOutgoingMessage(long id, String wrapperMessage,
 	    SpecificMessage wrappedMessage);
 
     /**
@@ -97,7 +97,7 @@ public interface MessagePublisher {
      *            wrapper id
      * @param wrappedMessage
      */
-    public void publishIncomingMessage(int id, SpecificMessage wrappedMessage);
+    public void publishIncomingMessage(long id, SpecificMessage wrappedMessage);
 
     /**
      * Instantiate a MessageWrapper with the given wrapper message and default
@@ -122,7 +122,7 @@ public interface MessagePublisher {
      * @param wrappedMessage
      *            SpecificMessage
      */
-    public void publishIncomingMessage(int id, String wrapperMessage,
+    public void publishIncomingMessage(long id, String wrapperMessage,
 	    SpecificMessage wrappedMessage);
 
 }

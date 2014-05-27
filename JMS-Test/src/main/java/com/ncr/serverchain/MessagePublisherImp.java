@@ -31,6 +31,10 @@ public class MessagePublisherImp implements MessagePublisher {
 
     private static long DEFAUTL_ID = new Date().getTime();
 
+    /*
+     * (non-Javadoc)
+     * @see com.ncr.serverchain.MessagePublisher#publishOutgoingMessage(com.ncr.serverchain.message.wrapper.MessageWrapper)
+     */
     @Override
     public void publishOutgoingMessage(MessageWrapper messageWrapper) {
 	this.outgoingProducer.sendMessage(messageWrapper);
@@ -52,7 +56,7 @@ public class MessagePublisherImp implements MessagePublisher {
      * @see com.ncr.ATMMonitoring.serverchain.MessagePublisher#publishOutgoingMessage(int, com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage)
      */
     @Override
-    public void publishOutgoingMessage(int id, SpecificMessage wrappedMessage) {
+    public void publishOutgoingMessage(long id, SpecificMessage wrappedMessage) {
 
 	MessageWrapper outmessage = this.instanciateOutgoingMessage(id, FORCE_USE_DEFAULT_WRAPPER_MESSAGE,
 		wrappedMessage);
@@ -75,7 +79,7 @@ public class MessagePublisherImp implements MessagePublisher {
      * @see com.ncr.ATMMonitoring.serverchain.MessagePublisher#publishOutgoingMessage(int, java.lang.String, com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage)
      */
     @Override
-    public void publishOutgoingMessage(int id, String wrapperMessage,
+    public void publishOutgoingMessage(long id, String wrapperMessage,
 	    SpecificMessage wrappedMessage) {
 
 	MessageWrapper wrapper = this.instanciateOutgoingMessage(id,
@@ -89,7 +93,6 @@ public class MessagePublisherImp implements MessagePublisher {
      */
     @Override
     public void publishIncomingMessage(MessageWrapper messageWrapper) {
-	
 	this.incomingProducer.sendMessage(messageWrapper);
     }
 
@@ -108,7 +111,7 @@ public class MessagePublisherImp implements MessagePublisher {
      * @see com.ncr.ATMMonitoring.serverchain.MessagePublisher#publishIncomingMessage(int, com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage)
      */
     @Override
-    public void publishIncomingMessage(int id, SpecificMessage wrappedMessage) {
+    public void publishIncomingMessage(long id, SpecificMessage wrappedMessage) {
 	
 	MessageWrapper inMessage = this.instanciateIncomingMessage(id, FORCE_USE_DEFAULT_WRAPPER_MESSAGE,
 		wrappedMessage);
@@ -131,7 +134,7 @@ public class MessagePublisherImp implements MessagePublisher {
      * @see com.ncr.ATMMonitoring.serverchain.MessagePublisher#publishIncomingMessage(int, java.lang.String, com.ncr.ATMMonitoring.serverchain.message.specific.SpecificMessage)
      */
     @Override
-    public void publishIncomingMessage(int id, String wrapperMessage,
+    public void publishIncomingMessage(long id, String wrapperMessage,
 	    SpecificMessage message) {
 
 	MessageWrapper inMessage = this.instanciateIncomingMessage(id,
