@@ -78,5 +78,26 @@ public interface NodeInformation {
      * @return
      */
     String getParentUrl();
+    
+    /**
+     * Return true if this node is a leaf in the network
+     * @return boolean
+     */
+    boolean isLeaf();
+    /**
+     * Return true if the node is the fist one and is not the only one
+     * @return boolean
+     */
+    boolean isRoot();
+   /**
+    * Return true if the node is not part of a network
+    * @return
+    */
+    boolean isOnlyNode();
+    /**
+     * return true if the node is a middle node
+     * @return
+     */
+    boolean isMiddleNode();
 
 }

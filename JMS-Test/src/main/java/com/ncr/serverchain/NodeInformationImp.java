@@ -90,7 +90,7 @@ public class NodeInformationImp implements NodeInformation {
 	
 	NodePosition nodePosition = NodePosition.ONLY_NODE;
 
-	if (this.isFirstNode() && !isOnlyNode()) {
+	if (this.isRoot()) {
 
 	    nodePosition = NodePosition.FIRST_NODE;
 
@@ -106,6 +106,14 @@ public class NodeInformationImp implements NodeInformation {
 
 	return nodePosition;
     }
+    
+    public boolean isRoot(){
+	if (this.isFirstNode() && !isOnlyNode()) {
+	    return true;
+	}else{
+	    return false;
+	}
+    }
 
     private boolean isFirstNode() {
 	boolean isFirstNode = false;
@@ -116,7 +124,7 @@ public class NodeInformationImp implements NodeInformation {
 	return isFirstNode;
     }
 
-    private boolean isLeaf() {
+    public boolean isLeaf() {
 	boolean isLeaf = false;
 
 	if (hasParentNode() && (this.getChildrenSubscribed().isEmpty())) {
@@ -126,7 +134,7 @@ public class NodeInformationImp implements NodeInformation {
 	return isLeaf;
     }
 
-    private boolean isMiddleNode() {
+    public boolean isMiddleNode() {
 
 	boolean isMiddleNode = false;
 
@@ -136,7 +144,7 @@ public class NodeInformationImp implements NodeInformation {
 	return isMiddleNode;
     }
 
-    private boolean isOnlyNode() {
+    public boolean isOnlyNode() {
 
 	boolean isOnlyNode = false;
 
