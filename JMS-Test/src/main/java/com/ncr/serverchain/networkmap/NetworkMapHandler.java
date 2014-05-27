@@ -44,7 +44,7 @@ public class NetworkMapHandler {
 	    if (!nodeInfo.isRoot()) {
 
 		modifyInformationIfInMap(nodeInfo);
-		setNodesAndChildrens(nodeInfo);
+		setNodesAndChildren(nodeInfo);
 	    }
 	}
 
@@ -68,8 +68,8 @@ public class NetworkMapHandler {
 	
 	NetworkNode newNode = new NetworkNode();
 	newNode.setNodeUrlAndPort(nodesInfo.getNodeUrlAndPort());
-	newNode.setRouterTable(nodesInfo.getRouterTable());
-	newNode.setLastcomunicationAt(new Date().getTime());
+	newNode.setRouterTable(nodesInfo.getNodeInfo());
+	newNode.setLastcomunicationAt(nodesInfo.getLastCommunication().getTime());
 	return newNode;
     }
 
@@ -100,13 +100,13 @@ public class NetworkMapHandler {
 	if (this.networkNodes.containsKey(nodeUrlAndPort)) {
 
 	    NetworkNode updateNode = this.networkNodes.get(nodeUrlAndPort);
-	    updateNode.setRouterTable(nodesInfo.getRouterTable());
+	    updateNode.setRouterTable(nodesInfo.getNodeInfo());
 	    updateNode.setLastcomunicationAt(new Date().getTime());
 	    this.networkNodes.put(nodeUrlAndPort, updateNode);
 	}
     }
 
-    private void setNodesAndChildrens(NodeSpecificInformation nodesInfo) {
+    private void setNodesAndChildren(NodeSpecificInformation nodesInfo) {
 
 	String parentUrlAndPort = nodesInfo.getParentNodeUrl();
 	String childUrlAndPort = nodesInfo.getNodeUrlAndPort();
