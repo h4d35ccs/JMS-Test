@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+ 
+ 
+ <context:annotation-config />
+    <context:component-scan base-package="com.ncr.serverchain">
+	    <context:exclude-filter expression="org.springframework.stereotype.Controller"
+	        type="annotation"/>
+    </context:component-scan>
+    
+    
+	 <bean id="propertyConfigurerServerChain"
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:chainconfig.properties</value>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<bean id="brokerJMS" class="org.apache.activemq.broker.BrokerService"
+		init-method="start" destroy-method="stop">
+		<property name="brokerName" value="broker" />
+		<property name="persistent" value="false" />
+		<property name="useJmx" value="false" />
+		<property name="transportConnectorURIs">
+			<list>
+				<value>${jms.localbroker.url}</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="localConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${jms.localbroker.url}" />
+	</bean>
+
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="maxConnections" value="10" />
+		<property name="maximumActive" value="100" />
+		<property name="connectionFactory" ref="localConnectionFactory" />
+	</bean>
+
+</beans>
