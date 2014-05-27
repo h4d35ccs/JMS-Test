@@ -12,7 +12,7 @@ import java.util.List;
 public class NetworkNode {
 
     private String nodeUrlAndPort;
-    private String routerTable;
+    private String nodeInfo;
     private long lastcomunicationInMilisecAt;
     private List<NetworkNode> children;
     
@@ -28,12 +28,12 @@ public class NetworkNode {
 	this.nodeUrlAndPort = nodeUrlAndPort;
     }
 
-    public String getRouterTable() {
-	return routerTable;
+    public String getNodeInfo() {
+	return nodeInfo;
     }
 
     public void setRouterTable(String routerTable) {
-	this.routerTable = routerTable;
+	this.nodeInfo = routerTable;
     }
 
     public List<NetworkNode> getChildren() {
@@ -64,7 +64,7 @@ public class NetworkNode {
 
 	return " [node =" + nodeUrlAndPort + " last comunication in second:"
 		+ this.getSecondsFromLastComunication() + ", routerTable="
-		+ routerTable + ", " + children + "]";
+		+ nodeInfo + ", " + children + "]";
     }
 
     /**
