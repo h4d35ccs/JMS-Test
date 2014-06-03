@@ -94,5 +94,17 @@ public abstract class BaseStrategy implements SpecifcMessageProcessStrategy {
     protected Object getSpringBean(Class<?> springbeanClass) {
 	return this.springContext.getBean(springbeanClass);
     }
+    
+    /**
+     * by default force to use the same SpecificMessage in the strategy
+     * when the TWO_WAY broadcast is set.
+     * 
+     * For changing the message overwrite this method in the concrete class
+     */
+    @Override
+    public SpecificMessage getChangeDirectionMessageInTwoWay() {
+	
+	return null;
+    }
 
 }
