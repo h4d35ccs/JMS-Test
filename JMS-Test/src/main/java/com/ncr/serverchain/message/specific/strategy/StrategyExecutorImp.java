@@ -67,8 +67,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	this.strategyToAply = StrategyFactory
 		.getStrategyForSpecificMessage(specificMessage);
 
-	this.strategyToAply
-		.setupStrategy(specificMessage, this.springContext);
+	this.strategyToAply.setupStrategy(specificMessage, this.springContext);
 
     }
 
@@ -92,7 +91,7 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	    this.broadcastMessageTwoWay(message);
 
 	} else if (isBroadcastTurnBack()) {
-	    
+
 	    this.bradcastTurnBack();
 	}
     }
@@ -174,8 +173,8 @@ public class StrategyExecutorImp implements StrategyExecutor {
 	    return false;
 	}
     }
-    
-    private void bradcastTurnBack(){
+
+    private void bradcastTurnBack() {
 	MessageWrapper wrapper = this.strategyToAply.getTurnBackMessage();
 	this.broadcastMessageOneWay(wrapper);
     }
@@ -185,11 +184,13 @@ public class StrategyExecutorImp implements StrategyExecutor {
 
 	String originalOutgoingMessage = message.getMessage();
 	long originalOutgoingId = message.getId();
-	SpecificMessage originalSpecificMessage = message.getSpecificMessage();
 
+	SpecificMessage specificMessageToBroadcastTwoWay = this
+		.getSpecificMessageToBrodcastSecondWay(message);
 	IncomingMessage incomingMessage = new IncomingMessage(
-		"switched to incoming "+originalOutgoingMessage, originalOutgoingId);
-	incomingMessage.setSpecificMessage(originalSpecificMessage);
+		"switched to incoming " + originalOutgoingMessage,
+		originalOutgoingId);
+	incomingMessage.setSpecificMessage(specificMessageToBroadcastTwoWay);
 
 	return incomingMessage;
     }
@@ -208,13 +209,28 @@ public class StrategyExecutorImp implements StrategyExecutor {
 
 	String originalIncomingMessage = message.getMessage();
 	long originalIncomingId = message.getId();
-	SpecificMessage originalSpecificMessage = message.getSpecificMessage();
+
+	SpecificMessage originalSpecificMessage = this
+		.getSpecificMessageToBrodcastSecondWay(message);
 
 	OutgoingMessage outmessage = new OutgoingMessage(
-		"switched to outgoing "+originalIncomingMessage, originalIncomingId);
+		"switched to outgoing " + originalIncomingMessage,
+		originalIncomingId);
 	outmessage.setSpecificMessage(originalSpecificMessage);
 
 	return outmessage;
+    }
+
+    private SpecificMessage getSpecificMessageToBrodcastSecondWay(
+	    MessageWrapper wrapper) {
+
+	SpecificMessage messageToBrodcastSecondWay = this.strategyToAply
+		.getChangeDirectionMessageInTwoWay();
+
+	if (messageToBrodcastSecondWay == null) {
+	    messageToBrodcastSecondWay = wrapper.getSpecificMessage();
+	}
+	return messageToBrodcastSecondWay;
     }
 
 }

@@ -72,5 +72,12 @@ public interface SpecifcMessageProcessStrategy {
      * @return MessageWrapper
      */
     MessageWrapper getTurnBackMessage();
+    
+    /**
+     * When the broadcast is set to TWO_WAY is possible to send another
+     * message in the other direction
+     * @return SpecificMessage
+     */
+    SpecificMessage getChangeDirectionMessageInTwoWay();
 
 }
