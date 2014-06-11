@@ -243,5 +243,17 @@ public class NetworkMapHandler {
 	NetworkNode rootNode = this.networkNodes.get(this.rootUrlAndPort);
 	return rootNode;
     }
-
+    
+    /**
+     * Return a network map with only a root node with the given information
+     * @param rootUrlAndPort
+     * @return NetworkMap
+     */
+    public NetworkMap constructEmptyNetworkMap(String rootUrlAndPort) {
+	NetworkNode soleRootNode = new NetworkNode();
+	soleRootNode.setLastcomunicationAt(NetworkNode.ROOT_COMUNICATION_DEFAULT_VALUE);
+	soleRootNode.setNodeUrlAndPort(rootUrlAndPort);
+	this.networkMap = new NetworkMap(soleRootNode);
+	return networkMap;
+    }
 }
