@@ -1,7 +1,6 @@
 package com.ncr.serverchain.networkmap;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +67,7 @@ public class NetworkMapHandler {
 	
 	NetworkNode newNode = new NetworkNode();
 	newNode.setNodeUrlAndPort(nodesInfo.getNodeUrlAndPort());
-	newNode.setRouterTable(nodesInfo.getNodeInfo());
+	newNode.setNodeInfo(nodesInfo.getNodeInfo());
 	newNode.setLastcomunicationAt(nodesInfo.getLastCommunication().getTime());
 	return newNode;
     }
@@ -98,10 +97,10 @@ public class NetworkMapHandler {
 	String nodeUrlAndPort = nodesInfo.getNodeUrlAndPort();
 
 	if (this.networkNodes.containsKey(nodeUrlAndPort)) {
-
+	   
 	    NetworkNode updateNode = this.networkNodes.get(nodeUrlAndPort);
-	    updateNode.setRouterTable(nodesInfo.getNodeInfo());
-	    updateNode.setLastcomunicationAt(new Date().getTime());
+	    updateNode.setNodeInfo(nodesInfo.getNodeInfo());
+	    updateNode.setLastcomunicationAt(nodesInfo.getLastCommunication().getTime());
 	    this.networkNodes.put(nodeUrlAndPort, updateNode);
 	}
     }
