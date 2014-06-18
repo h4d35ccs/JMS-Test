@@ -32,8 +32,8 @@ public class NetworkNode {
 	return nodeInfo;
     }
 
-    public void setRouterTable(String routerTable) {
-	this.nodeInfo = routerTable;
+    public void setNodeInfo(String nodeInfo) {
+	this.nodeInfo = nodeInfo;
     }
 
     public List<NetworkNode> getChildren() {
@@ -63,7 +63,7 @@ public class NetworkNode {
 	}
 
 	return " [node =" + nodeUrlAndPort + " last comunication in second:"
-		+ this.getSecondsFromLastComunication() + ", routerTable="
+		+ this.getSecondsFromLastComunication() + ", Node info="
 		+ nodeInfo + ", " + children + "]";
     }
 
